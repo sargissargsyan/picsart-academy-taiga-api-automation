@@ -5,10 +5,16 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.example.models.LoginRequestBody;
+import org.example.models.RegisterRequestBody;
+import org.example.models.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.*;
 
 public class TaigaLogin {
     private RequestSpecification requestSpecification;
@@ -27,35 +33,50 @@ public class TaigaLogin {
 
     @Test
     public void registerUser() {
-        String body ="{\n    \"accepted_terms\": true,\n    \"username\": \"picsartacademy1759823663\",\n    \"full_name\": \"Picsart Academy\",\n    \"email\": \"picsartacademy1759823663@gmail.com\",\n    \"password\": \"Picsart12345!\",\n    \"type\": \"public\"\n}";
-
-        String username = given()
-                .spec(requestSpecification).
-        when()
-                .body(body)
+        String username = "picartacademy" + new Random().nextInt(100);
+        String email = "picsartacademy"+ + new Random().nextInt(100) + "@gmail.com";
+        RegisterRequestBody requestBody = new RegisterRequestBody();
+        requestBody.setUsername(username);
+        requestBody.setPassword("Picsart12345");
+        requestBody.setAccepted_terms(true);
+        requestBody.setFull_name("Picsart Academy");
+        requestBody.setEmail(email);
+        requestBody.setType("public");
+        User newUser = given()
+                .spec(requestSpecification)
+                .body(requestBody).
+         when()
                 .post("/api/v1/auth/register").
-        then()
+        then().log().all()
                 .spec(responseSpecification)
                 .statusCode(201)
-                .extract().path("username");
-        System.out.println(username);
+                .extract().as(User.class);
+
+        assertEquals(newUser.getUsername(), username, "Incorrect username!");
+        assertEquals(newUser.getEmail(), email, "Incorrect email!");
+        assertEquals(newUser.getFull_name(), "Picsart Academy", "Incorrect full name!");
+        assertTrue(newUser.getAccepted_terms(), "Incorrect accepted terms!");
+        assertFalse(newUser.getVerified_email(), "Incorrect verified email!");
 
     }
 
     @Test
     public void login() {
-        String body = "{\"username\": \"picsartacademy1759822485\",\"password\": \"Picsart12345!\",\"type\": \"normal\"}";
+        LoginRequestBody loginRequestBody = new LoginRequestBody();
+        loginRequestBody.setUsername("picsartacademy1759822485");
+        loginRequestBody.setPassword("Picsart12345!");
+        loginRequestBody.setType("normal");
 
-        String token = given()
-                .spec(requestSpecification).
+        User user = given()
+                .spec(requestSpecification)
+                .body(loginRequestBody).
         when()
-                .body(body)
                 .post("api/v1/auth").
-        then()
+        then().log().all()
                 .spec(responseSpecification)
                 .statusCode(200)
-                .extract().path("auth_token");
-        System.out.println(token);
+                .extract().body().as(User.class);
+        System.out.println(user.getAuth_token());
     }
 
 
