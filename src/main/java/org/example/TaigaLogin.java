@@ -78,8 +78,4 @@ public class TaigaLogin {
                 .extract().body().as(User.class);
         System.out.println(user.getAuth_token());
     }
-
-
-
-
 }
