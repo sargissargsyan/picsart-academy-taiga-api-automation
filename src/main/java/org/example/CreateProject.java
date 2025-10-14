@@ -30,8 +30,8 @@ public class CreateProject {
         responseSpecification = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
                 .build();
-        String username = "picartacademy" + new Random().nextInt(100);
-        String email = "picsartacademy"+ + new Random().nextInt(100) + "@gmail.com";
+        String username = "picartacademy" + new Random().nextInt(1000);
+        String email = "picsartacademy"+ + new Random().nextInt(1000) + "@gmail.com";
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
         requestBody.setPassword("Picsart12345");
@@ -52,7 +52,7 @@ public class CreateProject {
 
     @Test
     public void createProject() {
-        ProjectRequestBody project = new ProjectRequestBody();
+        Project project = new Project();
         project.setName("Test Project Name");
         project.setDescription("Test Project Description");
         project.setCreation_template(1);
