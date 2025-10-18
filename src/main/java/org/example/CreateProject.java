@@ -4,10 +4,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.example.models.Project;
-import org.example.models.ProjectRequestBody;
-import org.example.models.RegisterRequestBody;
-import org.example.models.User;
+import org.example.models.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -31,7 +28,7 @@ public class CreateProject {
                 .expectContentType(ContentType.JSON)
                 .build();
         String username = "picartacademy" + new Random().nextInt(1000);
-        String email = "picsartacademy"+ + new Random().nextInt(1000) + "@gmail.com";
+        String email = "picsartacademy"+ new Random().nextInt(1000) + "@gmail.com";
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
         requestBody.setPassword("Picsart12345");
@@ -69,6 +66,32 @@ public class CreateProject {
                     .statusCode(201)
                     .extract().as(Project.class);
 
+        Issue issue = new Issue();
+        issue.setSubject("Test Issue Subject");
+        issue.setProject(createdProject.getId());
+
+        Issue createdIssue = given().spec(requestSpecification).body(issue)
+                .when().post("/api/v1/issues")
+                .then()
+                .spec(responseSpecification)
+                .statusCode(201).extract().as(Issue.class);
+
+        IssueStatus[] issueStatuses =  given().spec(requestSpecification)
+                .param("project_id", createdProject.getId())
+                .header("Authorization", "Bearer " + createdUser.getAuth_token()).
+                when().get("/api/v1/issue-statuses")
+                .then().log().all()
+                .spec(responseSpecification)
+                .statusCode(200)
+                .extract().as(IssueStatus[].class);
+
         System.out.println(createdProject);
+
+
+    }
+
+    @Test
+    public void createProjectWithUser() {
+
     }
 }

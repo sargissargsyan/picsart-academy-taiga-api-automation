@@ -91,11 +91,19 @@ public class IssueTest {
                 .spec(responseSpecification)
                 .statusCode(201).extract().as(Issue.class);
 
+        IssueStatus[] issueStatuses =  given().spec(requestSpecification)
+                .param("project_id", createdProject.getId()).
+                when().get("/api/v1/issue-statuses")
+                .then().log().all()
+                .spec(responseSpecification)
+                .statusCode(200)
+                .extract().as(IssueStatus[].class);
+
         assertEquals(createdIssue.getProject(), createdProject.getId(), "Incorrect project id!");
         assertEquals(createdIssue.getProject_extra_info().getName(), createdProject.getName(), "Incorrect project name!");
         assertEquals(createdIssue.getStatus_extra_info().getName(), "New", "Incorrect issue status!");
         assertEquals(createdIssue.getOwner_extra_info().getUsername(), createdUser.getUsername(), "Incorrect issue owner username!");
-        assertFalse(createdIssue.isIs_watcher(), "Incorrect issue watcher status!");
+        assertFalse(createdIssue.getIs_watcher(), "Incorrect issue watcher status!");
         assertNull(createdIssue.getGenerated_user_stories(), "Incorrect issue generated user stories!");
         assertNotNull(createdIssue.getCreated_date(), "Incorrect issue created date!");
     }
