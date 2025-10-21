@@ -1,4 +1,4 @@
-package org.example.models;
+package io.taiga.models;
 
 public class IssueType{
     public int id;

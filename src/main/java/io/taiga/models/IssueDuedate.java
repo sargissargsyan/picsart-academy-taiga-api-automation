@@ -1,6 +1,6 @@
-package org.example.models;
+package io.taiga.models;
 
-public class TaskDuedate{
+public class IssueDuedate {
     public int id;
     public String name;
     public int order;

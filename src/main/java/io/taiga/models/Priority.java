@@ -1,10 +1,10 @@
-package org.example.models;
+package io.taiga.models;
 
-public class Point{
+public class Priority{
     public int id;
     public String name;
     public int order;
-    public double value;
+    public String color;
     public int project_id;
 
     public int getId() {
@@ -31,12 +31,12 @@ public class Point{
         this.order = order;
     }
 
-    public double getValue() {
-        return value;
+    public String getColor() {
+        return color;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public int getProject_id() {

@@ -1,13 +1,13 @@
-package org.example.models;
+package io.taiga.models;
 
-public class IssueDuedate {
+public class TaskStatus{
     public int id;
     public String name;
     public int order;
-    public boolean by_default;
+    public boolean is_closed;
     public String color;
-    public int days_to_due;
     public int project_id;
+    public String slug;
 
     public int getId() {
         return id;
@@ -33,12 +33,12 @@ public class IssueDuedate {
         this.order = order;
     }
 
-    public boolean isBy_default() {
-        return by_default;
+    public boolean isIs_closed() {
+        return is_closed;
     }
 
-    public void setBy_default(boolean by_default) {
-        this.by_default = by_default;
+    public void setIs_closed(boolean is_closed) {
+        this.is_closed = is_closed;
     }
 
     public String getColor() {
@@ -49,19 +49,19 @@ public class IssueDuedate {
         this.color = color;
     }
 
-    public int getDays_to_due() {
-        return days_to_due;
-    }
-
-    public void setDays_to_due(int days_to_due) {
-        this.days_to_due = days_to_due;
-    }
-
     public int getProject_id() {
         return project_id;
     }
 
     public void setProject_id(int project_id) {
         this.project_id = project_id;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }

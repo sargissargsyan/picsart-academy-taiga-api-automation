@@ -1,13 +1,16 @@
-package org.example.models;
+package io.taiga.models;
 
-public class TaskStatus{
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EpicStatus {
     public int id;
     public String name;
+    public String slug;
     public int order;
     public boolean is_closed;
     public String color;
     public int project_id;
-    public String slug;
 
     public int getId() {
         return id;
@@ -23,6 +26,14 @@ public class TaskStatus{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public int getOrder() {
@@ -55,13 +66,5 @@ public class TaskStatus{
 
     public void setProject_id(int project_id) {
         this.project_id = project_id;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
     }
 }

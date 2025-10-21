@@ -1,15 +1,14 @@
-package org.example.models;
+package io.taiga.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class EpicStatus {
+public class Role{
     public int id;
     public String name;
     public String slug;
+    public ArrayList<String> permissions;
     public int order;
-    public boolean is_closed;
-    public String color;
+    public boolean computable;
     public int project_id;
 
     public int getId() {
@@ -36,6 +35,14 @@ public class EpicStatus {
         this.slug = slug;
     }
 
+    public ArrayList<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(ArrayList<String> permissions) {
+        this.permissions = permissions;
+    }
+
     public int getOrder() {
         return order;
     }
@@ -44,20 +51,12 @@ public class EpicStatus {
         this.order = order;
     }
 
-    public boolean isIs_closed() {
-        return is_closed;
+    public boolean isComputable() {
+        return computable;
     }
 
-    public void setIs_closed(boolean is_closed) {
-        this.is_closed = is_closed;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setComputable(boolean computable) {
+        this.computable = computable;
     }
 
     public int getProject_id() {

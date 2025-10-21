@@ -1,4 +1,4 @@
-package org.example.models;
+package io.taiga.models;
 
 public class LoginRequestBody {
     private String username;

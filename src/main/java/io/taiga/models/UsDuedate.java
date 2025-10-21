@@ -1,10 +1,12 @@
-package org.example.models;
+package io.taiga.models;
 
-public class Priority{
+public class UsDuedate{
     public int id;
     public String name;
     public int order;
+    public boolean by_default;
     public String color;
+    public int days_to_due;
     public int project_id;
 
     public int getId() {
@@ -31,12 +33,28 @@ public class Priority{
         this.order = order;
     }
 
+    public boolean isBy_default() {
+        return by_default;
+    }
+
+    public void setBy_default(boolean by_default) {
+        this.by_default = by_default;
+    }
+
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getDays_to_due() {
+        return days_to_due;
+    }
+
+    public void setDays_to_due(int days_to_due) {
+        this.days_to_due = days_to_due;
     }
 
     public int getProject_id() {

@@ -1,4 +1,4 @@
-package org.example.models;
+package io.taiga.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

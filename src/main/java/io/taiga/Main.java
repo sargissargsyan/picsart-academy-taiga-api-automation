@@ -1,4 +1,4 @@
-package org.example;
+package io.taiga;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;

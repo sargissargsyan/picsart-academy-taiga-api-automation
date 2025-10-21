@@ -1,20 +1,23 @@
-package org.example;
+package io.taiga;
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.example.models.*;
+import io.taiga.models.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.util.Random;
+import java.util.Date;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.*;
 
-public class CreateProject {
+public class IssueTest {
     private User createdUser;
+    private User loggedInUser;
+    private Project createdProject;
     private RequestSpecification requestSpecification;
     private ResponseSpecification responseSpecification;
 
@@ -27,8 +30,8 @@ public class CreateProject {
         responseSpecification = new ResponseSpecBuilder()
                 .expectContentType(ContentType.JSON)
                 .build();
-        String username = "picartacademy" + new Random().nextInt(1000);
-        String email = "picsartacademy"+ new Random().nextInt(1000) + "@gmail.com";
+        String username = "picartacademy" + new Date().getTime();
+        String email = "picsartacademy"+ + new Date().getTime() + "@gmail.com";
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
         requestBody.setPassword("Picsart12345");
@@ -41,31 +44,42 @@ public class CreateProject {
                 .body(requestBody).
                 when()
                 .post("/api/v1/auth/register").
-                then().log().all()
+                then()
                 .spec(responseSpecification)
                 .statusCode(201)
                 .extract().as(User.class);
-    }
+        LoginRequestBody loginRequestBody = new LoginRequestBody();
+        loginRequestBody.setUsername(createdUser.getUsername());
+        loginRequestBody.setPassword("Picsart12345");
+        loginRequestBody.setType("normal");
+        loggedInUser = given()
+                .spec(requestSpecification)
+                .body(loginRequestBody)
+            .when().post("/api/v1/auth")
+            .then()
+                .statusCode(200)
+                    .extract().as(User.class);
 
-    @Test
-    public void createProject() {
         Project project = new Project();
         project.setName("Test Project Name");
         project.setDescription("Test Project Description");
         project.setCreation_template(1);
         project.setIs_private(false);
 
-        Project createdProject = given()
-                    .spec(requestSpecification)
-                    .body(project)
-                    .header("Authorization", "Bearer " + createdUser.getAuth_token()).
+        createdProject = given()
+                .spec(requestSpecification)
+                .body(project)
+                .header("Authorization", "Bearer " + createdUser.getAuth_token()).
                 when()
-                    .post("/api/v1/projects")
-                .then().log().all()
-                    .spec(responseSpecification)
-                    .statusCode(201)
-                    .extract().as(Project.class);
-
+                .post("/api/v1/projects")
+                .then()
+                .spec(responseSpecification)
+                .statusCode(201)
+                .extract().as(Project.class);
+        requestSpecification.header("Authorization", "Bearer " + loggedInUser.getAuth_token());
+    }
+    @Test
+    public void createIssue() {
         Issue issue = new Issue();
         issue.setSubject("Test Issue Subject");
         issue.setProject(createdProject.getId());
@@ -77,21 +91,19 @@ public class CreateProject {
                 .statusCode(201).extract().as(Issue.class);
 
         IssueStatus[] issueStatuses =  given().spec(requestSpecification)
-                .param("project_id", createdProject.getId())
-                .header("Authorization", "Bearer " + createdUser.getAuth_token()).
+                .param("project_id", createdProject.getId()).
                 when().get("/api/v1/issue-statuses")
                 .then().log().all()
                 .spec(responseSpecification)
                 .statusCode(200)
                 .extract().as(IssueStatus[].class);
 
-        System.out.println(createdProject);
-
-
-    }
-
-    @Test
-    public void createProjectWithUser() {
-
+        assertEquals(createdIssue.getProject(), createdProject.getId(), "Incorrect project id!");
+        assertEquals(createdIssue.getProject_extra_info().getName(), createdProject.getName(), "Incorrect project name!");
+        assertEquals(createdIssue.getStatus_extra_info().getName(), "New", "Incorrect issue status!");
+        assertEquals(createdIssue.getOwner_extra_info().getUsername(), createdUser.getUsername(), "Incorrect issue owner username!");
+        assertFalse(createdIssue.getIs_watcher(), "Incorrect issue watcher status!");
+        assertNull(createdIssue.getGenerated_user_stories(), "Incorrect issue generated user stories!");
+        assertNotNull(createdIssue.getCreated_date(), "Incorrect issue created date!");
     }
 }

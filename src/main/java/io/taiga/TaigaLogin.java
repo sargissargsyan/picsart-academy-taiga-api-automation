@@ -1,13 +1,13 @@
-package org.example;
+package io.taiga;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.example.models.LoginRequestBody;
-import org.example.models.RegisterRequestBody;
-import org.example.models.User;
+import io.taiga.models.LoginRequestBody;
+import io.taiga.models.RegisterRequestBody;
+import io.taiga.models.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
