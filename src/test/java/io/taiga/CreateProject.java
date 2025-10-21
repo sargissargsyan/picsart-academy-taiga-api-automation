@@ -4,6 +4,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import io.taiga.api.services.AccountService;
 import io.taiga.models.*;
 import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
@@ -36,15 +37,7 @@ public class CreateProject {
         requestBody.setFull_name("Picsart Academy");
         requestBody.setEmail(email);
         requestBody.setType("public");
-        createdUser = given()
-                .spec(requestSpecification)
-                .body(requestBody).
-                when()
-                .post(Urls.REGISTER_URL).
-                then().log().all()
-                .spec(responseSpecification)
-                .statusCode(201)
-                .extract().as(User.class);
+        createdUser = AccountService.register(requestBody).then().extract().as(User.class);
     }
 
     @Test
@@ -66,32 +59,8 @@ public class CreateProject {
                     .statusCode(201)
                     .extract().as(Project.class);
 
-        Issue issue = new Issue();
-        issue.setSubject("Test Issue Subject");
-        issue.setProject(createdProject.getId());
-
-        Issue createdIssue = given().spec(requestSpecification).body(issue)
-                .when().post(Urls.ISSUES_URL)
-                .then()
-                .spec(responseSpecification)
-                .statusCode(201).extract().as(Issue.class);
-
-        IssueStatus[] issueStatuses =  given().spec(requestSpecification)
-                .param("project_id", createdProject.getId())
-                .header("Authorization", "Bearer " + createdUser.getAuth_token()).
-                when().get(Urls.ISSUES_STATUSES_URL)
-                .then().log().all()
-                .spec(responseSpecification)
-                .statusCode(200)
-                .extract().as(IssueStatus[].class);
-
         System.out.println(createdProject);
 
-
-    }
-
-    @Test
-    public void createProjectWithUser() {
 
     }
 }
