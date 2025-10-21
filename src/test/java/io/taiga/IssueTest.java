@@ -5,6 +5,8 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import io.taiga.api.services.AccountService;
+import io.taiga.api.services.ProjectService;
 import io.taiga.models.*;
 import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
@@ -41,11 +43,7 @@ public class IssueTest {
         requestBody.setFull_name("Picsart Academy");
         requestBody.setEmail(email);
         requestBody.setType("public");
-        createdUser = given()
-                .spec(requestSpecification)
-                .body(requestBody).
-                when()
-                .post(REGISTER_URL).
+        createdUser = AccountService.register(requestBody).
                 then()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -54,10 +52,7 @@ public class IssueTest {
         loginRequestBody.setUsername(createdUser.getUsername());
         loginRequestBody.setPassword("Picsart12345");
         loginRequestBody.setType("normal");
-        loggedInUser = given()
-                .spec(requestSpecification)
-                .body(loginRequestBody)
-            .when().post(Urls.LOGIN_URL)
+        loggedInUser = AccountService.login(loginRequestBody)
             .then()
                 .statusCode(200)
                     .extract().as(User.class);
@@ -68,12 +63,7 @@ public class IssueTest {
         project.setCreation_template(1);
         project.setIs_private(false);
 
-        createdProject = given()
-                .spec(requestSpecification)
-                .body(project)
-                .header("Authorization", "Bearer " + createdUser.getAuth_token()).
-                when()
-                .post(Urls.PROJECTS_URL)
+        createdProject = ProjectService.createProject(project, createdUser.getAuth_token())
                 .then()
                 .spec(responseSpecification)
                 .statusCode(201)
