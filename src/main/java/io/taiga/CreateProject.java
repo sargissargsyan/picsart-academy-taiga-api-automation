@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import io.taiga.models.*;
+import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -39,7 +40,7 @@ public class CreateProject {
                 .spec(requestSpecification)
                 .body(requestBody).
                 when()
-                .post("/api/v1/auth/register").
+                .post(Urls.REGISTER_URL).
                 then().log().all()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -59,7 +60,7 @@ public class CreateProject {
                     .body(project)
                     .header("Authorization", "Bearer " + createdUser.getAuth_token()).
                 when()
-                    .post("/api/v1/projects")
+                    .post(Urls.PROJECTS_URL)
                 .then().log().all()
                     .spec(responseSpecification)
                     .statusCode(201)
@@ -70,7 +71,7 @@ public class CreateProject {
         issue.setProject(createdProject.getId());
 
         Issue createdIssue = given().spec(requestSpecification).body(issue)
-                .when().post("/api/v1/issues")
+                .when().post(Urls.ISSUES_URL)
                 .then()
                 .spec(responseSpecification)
                 .statusCode(201).extract().as(Issue.class);
@@ -78,7 +79,7 @@ public class CreateProject {
         IssueStatus[] issueStatuses =  given().spec(requestSpecification)
                 .param("project_id", createdProject.getId())
                 .header("Authorization", "Bearer " + createdUser.getAuth_token()).
-                when().get("/api/v1/issue-statuses")
+                when().get(Urls.ISSUES_STATUSES_URL)
                 .then().log().all()
                 .spec(responseSpecification)
                 .statusCode(200)

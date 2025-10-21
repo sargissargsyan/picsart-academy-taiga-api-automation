@@ -8,6 +8,7 @@ import io.restassured.specification.ResponseSpecification;
 import io.taiga.models.LoginRequestBody;
 import io.taiga.models.RegisterRequestBody;
 import io.taiga.models.User;
+import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -46,7 +47,7 @@ public class TaigaLogin {
                 .spec(requestSpecification)
                 .body(requestBody).
          when()
-                .post("/api/v1/auth/register").
+                .post(Urls.REGISTER_URL).
         then().log().all()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -71,7 +72,7 @@ public class TaigaLogin {
                 .spec(requestSpecification)
                 .body(loginRequestBody).
         when()
-                .post("api/v1/auth").
+                .post(Urls.LOGIN_URL).
         then().log().all()
                 .spec(responseSpecification)
                 .statusCode(200)

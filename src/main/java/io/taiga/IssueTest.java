@@ -6,12 +6,14 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import io.taiga.models.*;
+import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 
 import static io.restassured.RestAssured.given;
+import static io.taiga.utils.Urls.*;
 import static org.testng.Assert.*;
 
 public class IssueTest {
@@ -43,7 +45,7 @@ public class IssueTest {
                 .spec(requestSpecification)
                 .body(requestBody).
                 when()
-                .post("/api/v1/auth/register").
+                .post(REGISTER_URL).
                 then()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -55,7 +57,7 @@ public class IssueTest {
         loggedInUser = given()
                 .spec(requestSpecification)
                 .body(loginRequestBody)
-            .when().post("/api/v1/auth")
+            .when().post(Urls.LOGIN_URL)
             .then()
                 .statusCode(200)
                     .extract().as(User.class);
@@ -71,7 +73,7 @@ public class IssueTest {
                 .body(project)
                 .header("Authorization", "Bearer " + createdUser.getAuth_token()).
                 when()
-                .post("/api/v1/projects")
+                .post(Urls.PROJECTS_URL)
                 .then()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -85,14 +87,14 @@ public class IssueTest {
         issue.setProject(createdProject.getId());
 
         Issue createdIssue = given().spec(requestSpecification).body(issue)
-                .when().post("/api/v1/issues")
+                .when().post(ISSUES_URL)
                 .then()
                 .spec(responseSpecification)
                 .statusCode(201).extract().as(Issue.class);
 
         IssueStatus[] issueStatuses =  given().spec(requestSpecification)
                 .param("project_id", createdProject.getId()).
-                when().get("/api/v1/issue-statuses")
+                when().get(ISSUES_STATUSES_URL)
                 .then().log().all()
                 .spec(responseSpecification)
                 .statusCode(200)
