@@ -7,6 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.IssueService;
+import io.taiga.api.services.IssueStatusService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.models.*;
 import io.taiga.utils.Urls;
@@ -81,14 +82,17 @@ public class IssueTest {
                 .then()
                 .statusCode(201).extract().as(Issue.class);
 
-        IssueStatus[] issueStatuses =  given().spec(requestSpecification)
-                .param("project_id", createdProject.getId()).
-                when().get(ISSUES_STATUSES_URL)
-                .then().log().all()
-                .spec(responseSpecification)
-                .statusCode(200)
-                .extract().as(IssueStatus[].class);
+        IssueStatus[] issueStatuses =  IssueStatusService.getIssueStatuses(createdProject.getId(), createdUser.getAuth_token())
+                .then().extract().as(IssueStatus[].class);
 
+        Integer newIssueStatusId = null;
+        for (IssueStatus issueStatus : issueStatuses) {
+            if(issueStatus.getName().equals("New")){
+                newIssueStatusId = issueStatus.getId();
+            }
+        }
+
+        assertEquals(createdIssue.getStatus(), newIssueStatusId, "Issue Id was incorrect!");
         assertEquals(createdIssue.getProject(), createdProject.getId(), "Incorrect project id!");
         assertEquals(createdIssue.getProject_extra_info().getName(), createdProject.getName(), "Incorrect project name!");
         assertEquals(createdIssue.getStatus_extra_info().getName(), "New", "Incorrect issue status!");
