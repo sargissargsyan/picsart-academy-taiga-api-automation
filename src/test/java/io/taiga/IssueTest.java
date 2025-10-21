@@ -6,6 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.services.AccountService;
+import io.taiga.api.services.IssueService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.models.*;
 import io.taiga.utils.Urls;
@@ -76,10 +77,8 @@ public class IssueTest {
         issue.setSubject("Test Issue Subject");
         issue.setProject(createdProject.getId());
 
-        Issue createdIssue = given().spec(requestSpecification).body(issue)
-                .when().post(ISSUES_URL)
+        Issue createdIssue = IssueService.createIssue(issue, createdUser.getAuth_token())
                 .then()
-                .spec(responseSpecification)
                 .statusCode(201).extract().as(Issue.class);
 
         IssueStatus[] issueStatuses =  given().spec(requestSpecification)
