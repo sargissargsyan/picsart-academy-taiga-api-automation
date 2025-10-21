@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-public class CreateProject {
+public class ProjectTest {
     private User createdUser;
 
     @BeforeMethod
