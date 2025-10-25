@@ -13,4 +13,12 @@ public class UserStoryService extends BaseService {
         requestSpecification.headers(setToken(token));
         return post(requestSpecification);
     }
+
+    public static Response editUserStory(UserStory userStory, String token) {
+        RequestSpecification requestSpecification = configBaseRequest();
+        requestSpecification.basePath(Urls.USER_STORY_URL + "/" + userStory.getId());
+        requestSpecification.body(userStory);
+        requestSpecification.headers(setToken(token));
+        return patch(requestSpecification);
+    }
 }

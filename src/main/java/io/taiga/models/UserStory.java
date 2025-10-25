@@ -16,7 +16,7 @@ public class UserStory {
     public Date due_date;
     public String due_date_reason;
     public String due_date_status;
-    public int total_comments;
+    public Integer total_comments;
     public ArrayList<Object> tags;
     public ArrayList<Object> attachments;
     public Integer status;
@@ -36,7 +36,7 @@ public class UserStory {
     public Object milestone;
     public Object milestone_slug;
     public Object milestone_name;
-    public boolean is_closed;
+    public Boolean is_closed;
     public Map<String, Integer> points;
     public Long backlog_order;
     public Long sprint_order;

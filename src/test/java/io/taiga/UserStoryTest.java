@@ -50,6 +50,23 @@ public class UserStoryTest {
         UserStory createdUserStory = UserStoryService
                 .createUserStory(userStory, createdUser.getAuth_token())
                 .then().log().all().extract().as(UserStory.class);
-        System.out.println("Created UserStory: " + createdUserStory);
+
+        //make assertions
+    }
+    @Test
+    public void editUserStory() {
+        UserStory userStory = new UserStory();
+        userStory.setProject(createdProject.getId());
+        userStory.setSubject("Test Subject " + new Random().nextInt(1000));
+        UserStory createdUserStory = UserStoryService
+                .createUserStory(userStory, createdUser.getAuth_token())
+                .then().log().all().extract().as(UserStory.class);
+        createdUserStory.setSubject("New Updated Subject " + new Random().nextInt(1000));
+        createdUserStory = UserStoryService.editUserStory(createdUserStory, createdUser.getAuth_token())
+                .then().log().all()
+                .extract().as(UserStory.class);
+        System.out.println("Created UserStory: ");
+
+        //make assertions
     }
 }
