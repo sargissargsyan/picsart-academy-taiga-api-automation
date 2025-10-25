@@ -46,13 +46,13 @@ public class IssueTest {
         requestBody.setEmail(email);
         requestBody.setType("public");
         createdUser = AccountService.register(requestBody).
-                then()
+                then().log().all()
                 .spec(responseSpecification)
                 .statusCode(201)
                 .extract().as(User.class);
         LoginRequestBody loginRequestBody = new LoginRequestBody();
         loginRequestBody.setUsername(createdUser.getUsername());
-        loginRequestBody.setPassword("Picsart12345");
+            loginRequestBody.setPassword("Picsart12345");
         loginRequestBody.setType("normal");
         loggedInUser = AccountService.login(loginRequestBody)
             .then()
