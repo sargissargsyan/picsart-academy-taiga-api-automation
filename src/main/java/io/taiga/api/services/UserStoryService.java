@@ -6,7 +6,18 @@ import io.taiga.models.UserStory;
 import io.taiga.utils.Urls;
 
 public class UserStoryService extends BaseService {
-    public static Response createUserStory(UserStory userStory, String token) {
+    public static Response get(Integer userStoryId, String token) {
+        RequestSpecification requestSpecification = configBaseRequest();
+        requestSpecification.basePath(Urls.USER_STORY_URL + "/" + userStoryId);
+        requestSpecification.headers(setToken(token));
+        return get(requestSpecification);
+    }
+
+    public static Response get(UserStory userStory, String token) {
+        return get(userStory.getId(), token);
+    }
+
+    public static Response create(UserStory userStory, String token) {
         RequestSpecification requestSpecification = configBaseRequest();
         requestSpecification.basePath(Urls.USER_STORY_URL);
         requestSpecification.body(userStory);
@@ -14,11 +25,22 @@ public class UserStoryService extends BaseService {
         return post(requestSpecification);
     }
 
-    public static Response editUserStory(UserStory userStory, String token) {
+    public static Response edit(UserStory userStory, String token) {
         RequestSpecification requestSpecification = configBaseRequest();
         requestSpecification.basePath(Urls.USER_STORY_URL + "/" + userStory.getId());
         requestSpecification.body(userStory);
         requestSpecification.headers(setToken(token));
         return patch(requestSpecification);
+    }
+
+    public static Response delete(UserStory userStory, String token) {
+        return delete(userStory.getId(), token);
+    }
+
+    public static Response delete(Integer userStoryId, String token) {
+        RequestSpecification requestSpecification = configBaseRequest();
+        requestSpecification.basePath(Urls.USER_STORY_URL + "/" + userStoryId);
+        requestSpecification.headers(setToken(token));
+        return delete(requestSpecification);
     }
 }

@@ -1,19 +1,16 @@
 package io.taiga;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.UserStoryService;
 import io.taiga.models.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Date;
 import java.util.Random;
+
+import static org.testng.Assert.assertEquals;
 
 public class UserStoryTest {
     private User createdUser;
@@ -43,12 +40,26 @@ public class UserStoryTest {
     }
 
     @Test
+    public void getUserStory() {
+        UserStory userStory = new UserStory();
+        userStory.setProject(createdProject.getId());
+        userStory.setSubject("Test Subject " + new Random().nextInt(1000));
+        UserStory createdUserStory = UserStoryService
+                .create(userStory, createdUser.getAuth_token())
+                .then().log().all().extract().as(UserStory.class);
+
+        UserStory getUserstory = UserStoryService.get(createdUserStory.getId(), createdUser.getAuth_token())
+                .then().extract().as(UserStory.class);
+        assertEquals(createdUserStory.getId(), getUserstory.getId());
+        //make assertions
+    }
+    @Test
     public void createUserStory() {
         UserStory userStory = new UserStory();
         userStory.setProject(createdProject.getId());
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
-                .createUserStory(userStory, createdUser.getAuth_token())
+                .create(userStory, createdUser.getAuth_token())
                 .then().log().all().extract().as(UserStory.class);
 
         //make assertions
@@ -59,14 +70,33 @@ public class UserStoryTest {
         userStory.setProject(createdProject.getId());
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
-                .createUserStory(userStory, createdUser.getAuth_token())
+                .create(userStory, createdUser.getAuth_token())
                 .then().log().all().extract().as(UserStory.class);
         createdUserStory.setSubject("New Updated Subject " + new Random().nextInt(1000));
-        createdUserStory = UserStoryService.editUserStory(createdUserStory, createdUser.getAuth_token())
+        createdUserStory = UserStoryService.edit(createdUserStory, createdUser.getAuth_token())
                 .then().log().all()
                 .extract().as(UserStory.class);
         System.out.println("Created UserStory: ");
 
+        //make assertions
+    }
+
+    @Test
+    public void deleteUserStory() {
+        UserStory userStory = new UserStory();
+        userStory.setProject(createdProject.getId());
+        userStory.setSubject("Test Subject " + new Random().nextInt(1000));
+        UserStory createdUserStory = UserStoryService
+                .create(userStory, createdUser.getAuth_token())
+                .then().log().all().extract().as(UserStory.class);
+
+        UserStoryService.delete(createdUserStory, createdUser.getAuth_token())
+                .then().assertThat().statusCode(204);
+
+        UserStoryService.get(createdUserStory.getId(), createdUser.getAuth_token())
+                .then().statusCode(404);
+
+        System.out.printf("Deleted UserStory: %s\n", createdUserStory);
         //make assertions
     }
 }
