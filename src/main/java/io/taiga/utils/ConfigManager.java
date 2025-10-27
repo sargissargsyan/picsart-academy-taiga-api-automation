@@ -1,9 +1,12 @@
 package io.taiga.utils;
 
+import lombok.extern.java.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Log
 public class ConfigManager {
     private static final String CONFIG_FILE = "config.properties";
     private static Properties properties;
@@ -22,13 +25,17 @@ public class ConfigManager {
 
 
     private void loadProperties() {
+        log.info("Loading configuration from: " + CONFIG_FILE);
         properties = new Properties();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE)) {
             if (inputStream == null) {
+                log.severe("Configuration file '" + CONFIG_FILE + "' not found in classpath");
                 throw new RuntimeException("Configuration file '" + CONFIG_FILE + "' not found in classpath");
             }
             properties.load(inputStream);
+            log.info("Configuration loaded successfully. Environment: " + getEnvironment());
         } catch (IOException e) {
+            log.severe("Failed to load configuration file: " + CONFIG_FILE + ". Error: " + e.getMessage());
             throw new RuntimeException("Failed to load configuration file: " + CONFIG_FILE, e);
         }
     }
