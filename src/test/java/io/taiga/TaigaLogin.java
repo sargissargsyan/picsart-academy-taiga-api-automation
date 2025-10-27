@@ -35,7 +35,7 @@ public class TaigaLogin {
     @Test
     public void registerUser() {
         String username = "picartacademy" + new Random().nextInt(100);
-        String email = "picsartacademy"+ + new Random().nextInt(100) + "@gmail.com";
+        String email = "picsartacademy"+ new Random().nextInt(100) + "@gmail.com";
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
         requestBody.setPassword("Picsart12345");
