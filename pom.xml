@@ -36,4 +36,39 @@
             <version>1.18.42</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <!-- TestNG configuration -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    
+                    <!-- Logging configuration -->
+                    <systemPropertyVariables>
+                        <java.util.logging.config.file>src/main/resources/logging.properties</java.util.logging.config.file>
+                    </systemPropertyVariables>
+                    
+                    <!-- Test execution configuration -->
+                    <parallel>false</parallel>
+                    <threadCount>1</threadCount>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    
+                    <!-- Report configuration -->
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    
+                    <!-- JVM arguments -->
+                    <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
