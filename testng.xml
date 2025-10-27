@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="TaigaApiTestSuite" parallel="false" thread-count="1">
+    
+    <listeners>
+        <listener class-name="io.taiga.utils.RetryListener"/>
+    </listeners>
+    
+    <test name="TaigaApiTests">
+        <classes>
+            <class name="io.taiga.TaigaLogin"/>
+            <class name="io.taiga.ProjectTest"/>
+            <class name="io.taiga.IssueTest"/>
+            <class name="io.taiga.UserStoryTest"/>
+        </classes>
+    </test>
+    
+</suite>

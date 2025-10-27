@@ -2,10 +2,13 @@ package io.taiga;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.models.*;
+import io.taiga.utils.TestRetryAnalyzer;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Random;
+
+import static org.testng.Assert.assertTrue;
 
 public class ProjectTest {
     private User createdUser;
@@ -24,7 +27,7 @@ public class ProjectTest {
         createdUser = AccountService.register(requestBody).then().extract().as(User.class);
     }
 
-    @Test
+    @Test(retryAnalyzer = TestRetryAnalyzer.class)
     public void createProject() {
         Project project = new Project();
         project.setName("Test Project Name");
@@ -38,6 +41,7 @@ public class ProjectTest {
                     .extract().as(Project.class);
 
         System.out.println(createdProject);
+        assertTrue(false);
 
 
     }
