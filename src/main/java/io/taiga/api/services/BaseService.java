@@ -4,6 +4,7 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import io.taiga.utils.ConfigManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +12,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class BaseService {
-    private static final String BASE_URL = "http://localhost";
-    private static final int BASE_URL_PORT = 9000;
+    private static final String BASE_URL = ConfigManager.getInstance().getBaseUrl();
+    private static final int BASE_URL_PORT = ConfigManager.getInstance().getPort();
 
     protected static RequestSpecification configBaseRequest() {
         return given()
