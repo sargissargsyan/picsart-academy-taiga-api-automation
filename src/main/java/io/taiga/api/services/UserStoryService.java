@@ -4,7 +4,9 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.taiga.models.UserStory;
 import io.taiga.utils.Urls;
+import lombok.extern.java.Log;
 
+@Log
 public class UserStoryService extends BaseService {
     public static Response get(Integer userStoryId, String token) {
         RequestSpecification requestSpecification = configBaseRequest();
@@ -22,6 +24,7 @@ public class UserStoryService extends BaseService {
         requestSpecification.basePath(Urls.USER_STORY_URL);
         requestSpecification.body(userStory);
         requestSpecification.headers(setToken(token));
+        log.info(userStory.toString());
         return post(requestSpecification);
     }
 
