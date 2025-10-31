@@ -1,11 +1,16 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
-public class Severity{
-    private int id;
-    private String name;
-    private int order;
-    private String color;
-    private int project_id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EpicStatus {
+    public int id;
+    public String name;
+    public String slug;
+    public int order;
+    public boolean is_closed;
+    public String color;
+    public int project_id;
 
     public int getId() {
         return id;
@@ -23,12 +28,28 @@ public class Severity{
         this.name = name;
     }
 
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
     public int getOrder() {
         return order;
     }
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public boolean isIs_closed() {
+        return is_closed;
+    }
+
+    public void setIs_closed(boolean is_closed) {
+        this.is_closed = is_closed;
     }
 
     public String getColor() {

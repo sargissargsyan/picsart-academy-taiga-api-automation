@@ -1,4 +1,4 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
 public class RegisterRequestBody {
     private boolean accepted_terms;

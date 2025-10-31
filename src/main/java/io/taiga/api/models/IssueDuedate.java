@@ -1,15 +1,12 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class EpicStatus {
+public class IssueDuedate {
     public int id;
     public String name;
-    public String slug;
     public int order;
-    public boolean is_closed;
+    public boolean by_default;
     public String color;
+    public int days_to_due;
     public int project_id;
 
     public int getId() {
@@ -28,14 +25,6 @@ public class EpicStatus {
         this.name = name;
     }
 
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
     public int getOrder() {
         return order;
     }
@@ -44,12 +33,12 @@ public class EpicStatus {
         this.order = order;
     }
 
-    public boolean isIs_closed() {
-        return is_closed;
+    public boolean isBy_default() {
+        return by_default;
     }
 
-    public void setIs_closed(boolean is_closed) {
-        this.is_closed = is_closed;
+    public void setBy_default(boolean by_default) {
+        this.by_default = by_default;
     }
 
     public String getColor() {
@@ -58,6 +47,14 @@ public class EpicStatus {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getDays_to_due() {
+        return days_to_due;
+    }
+
+    public void setDays_to_due(int days_to_due) {
+        this.days_to_due = days_to_due;
     }
 
     public int getProject_id() {

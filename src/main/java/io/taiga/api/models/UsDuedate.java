@@ -1,15 +1,13 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
-public class UsStatus{
+public class UsDuedate{
     public int id;
     public String name;
     public int order;
-    public boolean is_closed;
+    public boolean by_default;
     public String color;
-    public Object wip_limit;
+    public int days_to_due;
     public int project_id;
-    public String slug;
-    public boolean is_archived;
 
     public int getId() {
         return id;
@@ -35,12 +33,12 @@ public class UsStatus{
         this.order = order;
     }
 
-    public boolean isIs_closed() {
-        return is_closed;
+    public boolean isBy_default() {
+        return by_default;
     }
 
-    public void setIs_closed(boolean is_closed) {
-        this.is_closed = is_closed;
+    public void setBy_default(boolean by_default) {
+        this.by_default = by_default;
     }
 
     public String getColor() {
@@ -51,12 +49,12 @@ public class UsStatus{
         this.color = color;
     }
 
-    public Object getWip_limit() {
-        return wip_limit;
+    public int getDays_to_due() {
+        return days_to_due;
     }
 
-    public void setWip_limit(Object wip_limit) {
-        this.wip_limit = wip_limit;
+    public void setDays_to_due(int days_to_due) {
+        this.days_to_due = days_to_due;
     }
 
     public int getProject_id() {
@@ -65,21 +63,5 @@ public class UsStatus{
 
     public void setProject_id(int project_id) {
         this.project_id = project_id;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public boolean isIs_archived() {
-        return is_archived;
-    }
-
-    public void setIs_archived(boolean is_archived) {
-        this.is_archived = is_archived;
     }
 }

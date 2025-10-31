@@ -3,8 +3,10 @@ package io.taiga;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.UserStoryService;
-import io.taiga.models.*;
-import org.testng.Assert;
+import io.taiga.api.models.Project;
+import io.taiga.api.models.RegisterRequestBody;
+import io.taiga.api.models.User;
+import io.taiga.api.models.UserStory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

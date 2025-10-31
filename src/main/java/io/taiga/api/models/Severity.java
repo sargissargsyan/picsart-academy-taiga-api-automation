@@ -1,11 +1,11 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
-public class Point{
-    public int id;
-    public String name;
-    public int order;
-    public double value;
-    public int project_id;
+public class Severity{
+    private int id;
+    private String name;
+    private int order;
+    private String color;
+    private int project_id;
 
     public int getId() {
         return id;
@@ -31,12 +31,12 @@ public class Point{
         this.order = order;
     }
 
-    public double getValue() {
-        return value;
+    public String getColor() {
+        return color;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public int getProject_id() {

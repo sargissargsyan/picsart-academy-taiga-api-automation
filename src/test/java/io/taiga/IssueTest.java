@@ -5,19 +5,17 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import io.taiga.api.models.*;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.IssueService;
 import io.taiga.api.services.IssueStatusService;
 import io.taiga.api.services.ProjectService;
-import io.taiga.models.*;
-import io.taiga.utils.Urls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 
 import static io.restassured.RestAssured.given;
-import static io.taiga.utils.Urls.*;
 import static org.testng.Assert.*;
 
 public class IssueTest {

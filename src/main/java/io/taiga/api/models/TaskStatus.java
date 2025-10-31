@@ -1,4 +1,4 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
 public class TaskStatus{
     public int id;

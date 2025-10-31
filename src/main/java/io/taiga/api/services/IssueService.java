@@ -2,7 +2,7 @@ package io.taiga.api.services;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.taiga.models.Issue;
+import io.taiga.api.models.Issue;
 import io.taiga.utils.Urls;
 
 public class IssueService extends BaseService {

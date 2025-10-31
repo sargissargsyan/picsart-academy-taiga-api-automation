@@ -1,4 +1,4 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
 import java.util.ArrayList;
 

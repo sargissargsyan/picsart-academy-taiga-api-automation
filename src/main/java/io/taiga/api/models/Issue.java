@@ -1,4 +1,4 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

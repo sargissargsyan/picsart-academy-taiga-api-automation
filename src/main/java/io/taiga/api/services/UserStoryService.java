@@ -2,7 +2,7 @@ package io.taiga.api.services;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.taiga.models.UserStory;
+import io.taiga.api.models.UserStory;
 import io.taiga.utils.Urls;
 import lombok.extern.java.Log;
 

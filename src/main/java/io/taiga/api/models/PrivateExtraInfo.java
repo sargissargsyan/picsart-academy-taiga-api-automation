@@ -1,4 +1,4 @@
-package io.taiga.models;
+package io.taiga.api.models;
 
 public class PrivateExtraInfo {
     public boolean can_be_updated;
