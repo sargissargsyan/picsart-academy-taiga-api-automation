@@ -14,7 +14,7 @@ import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
 
-public class UserStoryTest {
+public class UserStoryTest extends TestBase {
     private User createdUser;
     private Project createdProject;
 

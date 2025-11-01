@@ -12,4 +12,4 @@ public class RetryListener implements IAnnotationTransformer {
         annotation.setRetryAnalyzer(RetryAnalyzer.class);
     }
 
-    }
+}

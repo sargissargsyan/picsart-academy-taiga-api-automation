@@ -10,7 +10,10 @@ import io.taiga.api.services.AccountService;
 import io.taiga.api.services.IssueService;
 import io.taiga.api.services.IssueStatusService;
 import io.taiga.api.services.ProjectService;
+import io.taiga.listeners.AutomationRunListener;
+import io.taiga.listeners.RetryAnalyzer;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.Date;
@@ -18,7 +21,7 @@ import java.util.Date;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.*;
 
-public class IssueTest {
+public class IssueTest extends TestBase{
     private User createdUser;
     private User loggedInUser;
     private Project createdProject;

@@ -11,7 +11,7 @@ import java.util.Random;
 
 import static org.testng.Assert.assertTrue;
 
-public class ProjectTest {
+public class ProjectTest extends TestBase {
     private User createdUser;
 
     @BeforeMethod

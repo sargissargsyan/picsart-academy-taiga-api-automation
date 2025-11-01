@@ -17,7 +17,7 @@ import java.util.Random;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.*;
 
-public class TaigaLogin {
+public class TaigaLogin extends TestBase {
     private RequestSpecification requestSpecification;
     private ResponseSpecification responseSpecification;
 
