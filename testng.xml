@@ -5,11 +5,14 @@
         <listener class-name="io.taiga.listeners.RetryListener"></listener>
     </listeners>
 <!--    <pakages>-->
-<!--        <pacakge>io.taiga</pacakge>-->
+<!--        <pacakge>io.taiga*</pacakge>-->
 <!--    </pakages>-->
     <test name="Taiga Project Area">
         <classes>
-            <class name="io.taiga.ProjectTest"></class>
+            <class name="io.taiga.ProjectTest"/>
+            <class name="io.taiga.IssueTest"/>
+            <class name="io.taiga.TaigaLogin"/>
+            <class name="io.taiga.UserStoryTest"/>
         </classes>
     </test>
 

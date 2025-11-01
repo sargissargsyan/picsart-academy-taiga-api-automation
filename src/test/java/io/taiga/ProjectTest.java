@@ -40,10 +40,5 @@ public class ProjectTest extends TestBase {
                 .then()
                     .statusCode(201)
                     .extract().as(Project.class);
-
-        System.out.println(createdProject);
-        assertTrue(false);
-
-
     }
 }

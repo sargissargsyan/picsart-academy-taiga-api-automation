@@ -8,6 +8,7 @@ import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.models.LoginRequestBody;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
+import io.taiga.api.services.AccountService;
 import io.taiga.utils.TestUtils;
 import io.taiga.utils.Urls;
 import lombok.extern.java.Log;
@@ -20,48 +21,38 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.*;
 @Log
 public class TaigaLogin extends TestBase {
-    private RequestSpecification requestSpecification;
-    private ResponseSpecification responseSpecification;
+
     private final static String PASSWORD = TestUtils.randomPassword(8);
     private String username;
+    private String email;
+    private String fullName;
+    private RegisterRequestBody requestBody;
 
     @BeforeMethod
     public void beforeMethod() {
-        requestSpecification = new RequestSpecBuilder()
-                .setBaseUri("http://localhost").setPort(9000)
-                .setContentType(ContentType.JSON)
-                .build();
-        responseSpecification = new ResponseSpecBuilder()
-                .expectContentType(ContentType.JSON)
-                .build();
+        fullName =TestUtils.randomNumber(4) + " " + TestUtils.randomNumber(4);
+        username = TestUtils.randomUsername(8);
+        email = TestUtils.randomEmail();
+
+        requestBody = new RegisterRequestBody();
+        requestBody.setUsername(username);
+        requestBody.setPassword(PASSWORD);
+        requestBody.setAccepted_terms(true);
+        requestBody.setFull_name(fullName);
+        requestBody.setEmail(email);
+        requestBody.setType("public");
     }
 
     @Test
     public void registerUser() {
-        log.info(username);
-        log.info(PASSWORD);
-        username = TestUtils.randomUsername(8);
-        String email = TestUtils.randomEmail();
-        RegisterRequestBody requestBody = new RegisterRequestBody();
-        requestBody.setUsername(username);
-        requestBody.setPassword(PASSWORD);
-        requestBody.setAccepted_terms(true);
-        requestBody.setFull_name(TestUtils.randomNumber(4) + " " + TestUtils.randomNumber(4));
-        requestBody.setEmail(email);
-        requestBody.setType("public");
-        User newUser = given()
-                .spec(requestSpecification)
-                .body(requestBody).
-         when()
-                .post(Urls.REGISTER_URL).
+        User newUser = AccountService.register(requestBody).
         then().log().all()
-                .spec(responseSpecification)
                 .statusCode(201)
                 .extract().as(User.class);
 
         assertEquals(newUser.getUsername(), username, "Incorrect username!");
         assertEquals(newUser.getEmail(), email, "Incorrect email!");
-        assertEquals(newUser.getFull_name(), "Picsart Academy", "Incorrect full name!");
+        assertEquals(newUser.getFull_name(), fullName, "Incorrect full name!");
         assertTrue(newUser.getAccepted_terms(), "Incorrect accepted terms!");
         assertFalse(newUser.getVerified_email(), "Incorrect verified email!");
 
@@ -69,20 +60,15 @@ public class TaigaLogin extends TestBase {
 
     @Test
     public void login() {
+        AccountService.register(requestBody);
         LoginRequestBody loginRequestBody = new LoginRequestBody();
         loginRequestBody.setUsername(username);
         loginRequestBody.setPassword(PASSWORD);
         loginRequestBody.setType("normal");
 
-        User user = given()
-                .spec(requestSpecification)
-                .body(loginRequestBody).
-        when()
-                .post(Urls.LOGIN_URL).
+        AccountService.login(loginRequestBody).
         then().log().all()
-                .spec(responseSpecification)
                 .statusCode(200)
                 .extract().body().as(User.class);
-        System.out.println(user.getAuth_token());
     }
 }
