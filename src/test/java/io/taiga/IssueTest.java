@@ -47,7 +47,7 @@ public class IssueTest extends TestBase{
         requestBody.setEmail(email);
         requestBody.setType("public");
         createdUser = AccountService.register(requestBody).
-                then().log().all()
+                then()
                 .spec(responseSpecification)
                 .statusCode(201)
                 .extract().as(User.class);

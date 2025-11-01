@@ -1,10 +1,5 @@
 package io.taiga;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.models.LoginRequestBody;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
@@ -46,7 +41,7 @@ public class TaigaLogin extends TestBase {
     @Test
     public void registerUser() {
         User newUser = AccountService.register(requestBody).
-        then().log().all()
+        then()
                 .statusCode(201)
                 .extract().as(User.class);
 
@@ -55,7 +50,6 @@ public class TaigaLogin extends TestBase {
         assertEquals(newUser.getFull_name(), fullName, "Incorrect full name!");
         assertTrue(newUser.getAccepted_terms(), "Incorrect accepted terms!");
         assertFalse(newUser.getVerified_email(), "Incorrect verified email!");
-
     }
 
     @Test
@@ -67,7 +61,7 @@ public class TaigaLogin extends TestBase {
         loginRequestBody.setType("normal");
 
         AccountService.login(loginRequestBody).
-        then().log().all()
+        then()
                 .statusCode(200)
                 .extract().body().as(User.class);
     }

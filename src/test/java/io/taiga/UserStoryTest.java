@@ -48,7 +48,7 @@ public class UserStoryTest extends TestBase {
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
                 .create(userStory, createdUser.getAuth_token())
-                .then().log().all().extract().as(UserStory.class);
+                .then().extract().as(UserStory.class);
 
         UserStory getUserstory = UserStoryService.get(createdUserStory.getId(), createdUser.getAuth_token())
                 .then().extract().as(UserStory.class);
@@ -62,7 +62,7 @@ public class UserStoryTest extends TestBase {
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
                 .create(userStory, createdUser.getAuth_token())
-                .then().log().all().extract().as(UserStory.class);
+                .then().extract().as(UserStory.class);
 
         //make assertions
     }
@@ -73,10 +73,10 @@ public class UserStoryTest extends TestBase {
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
                 .create(userStory, createdUser.getAuth_token())
-                .then().log().all().extract().as(UserStory.class);
+                .then().extract().as(UserStory.class);
         createdUserStory.setSubject("New Updated Subject " + new Random().nextInt(1000));
         createdUserStory = UserStoryService.edit(createdUserStory, createdUser.getAuth_token())
-                .then().log().all()
+                .then()
                 .extract().as(UserStory.class);
         System.out.println("Created UserStory: ");
 
@@ -90,7 +90,7 @@ public class UserStoryTest extends TestBase {
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
                 .create(userStory, createdUser.getAuth_token())
-                .then().log().all().extract().as(UserStory.class);
+                .then().extract().as(UserStory.class);
 
         UserStoryService.delete(createdUserStory, createdUser.getAuth_token())
                 .then().assertThat().statusCode(204);
