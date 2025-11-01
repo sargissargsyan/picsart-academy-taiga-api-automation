@@ -8,7 +8,9 @@ import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.models.LoginRequestBody;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
+import io.taiga.utils.TestUtils;
 import io.taiga.utils.Urls;
+import lombok.extern.java.Log;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -16,10 +18,12 @@ import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.*;
-
+@Log
 public class TaigaLogin extends TestBase {
     private RequestSpecification requestSpecification;
     private ResponseSpecification responseSpecification;
+    private final static String PASSWORD = TestUtils.randomPassword(8);
+    private String username;
 
     @BeforeMethod
     public void beforeMethod() {
@@ -34,13 +38,15 @@ public class TaigaLogin extends TestBase {
 
     @Test
     public void registerUser() {
-        String username = "picartacademy" + new Random().nextInt(100);
-        String email = "picsartacademy"+ + new Random().nextInt(100) + "@gmail.com";
+        log.info(username);
+        log.info(PASSWORD);
+        username = TestUtils.randomUsername(8);
+        String email = TestUtils.randomEmail();
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
-        requestBody.setPassword("Picsart12345");
+        requestBody.setPassword(PASSWORD);
         requestBody.setAccepted_terms(true);
-        requestBody.setFull_name("Picsart Academy");
+        requestBody.setFull_name(TestUtils.randomNumber(4) + " " + TestUtils.randomNumber(4));
         requestBody.setEmail(email);
         requestBody.setType("public");
         User newUser = given()
@@ -64,8 +70,8 @@ public class TaigaLogin extends TestBase {
     @Test
     public void login() {
         LoginRequestBody loginRequestBody = new LoginRequestBody();
-        loginRequestBody.setUsername("picsartacademy1759822485");
-        loginRequestBody.setPassword("Picsart12345!");
+        loginRequestBody.setUsername(username);
+        loginRequestBody.setPassword(PASSWORD);
         loginRequestBody.setType("normal");
 
         User user = given()
