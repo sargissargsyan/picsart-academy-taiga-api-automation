@@ -13,9 +13,7 @@ public final class TestUtils {
 
     public static String randomLetters(int len) {
         return RandomStringUtils.secure().nextAlphabetic(len);
-
     }
-
 
     public static String randomLowcaseString(int len) {
         return RandomStringUtils.secure().nextAlphabetic(len).toLowerCase();
@@ -59,7 +57,6 @@ public final class TestUtils {
     public static long randomInt(int min, int max) {
         return new Random().nextInt((max - min) + 1) + min;
     }
-
 
     public static String uuid() {
         return UUID.randomUUID().toString();
