@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Taiga API Automation" parralel="false" thread-count="1">
+<suite name="Taiga API Automation">
 
     <listeners>
-        <listener class-name="io.taiga.listeners.RetryListener"></listener>
+        <listener class-name="io.taiga.listeners.RetryListener"/>
     </listeners>
 <!--    <pakages>-->
 <!--        <pacakge>io.taiga*</pacakge>-->
