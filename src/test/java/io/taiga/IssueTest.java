@@ -1,5 +1,7 @@
 package io.taiga;
-
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.TmsLink;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -74,6 +76,8 @@ public class IssueTest extends TestBase{
         requestSpecification.header("Authorization", "Bearer " + loggedInUser.getAuth_token());
     }
     @Test
+    @Owner("Sargis Sargsyan")
+    @Description("Create issue and validate the response")
     public void createIssue() {
         Issue issue = new Issue();
         issue.setSubject("Test Issue Subject");

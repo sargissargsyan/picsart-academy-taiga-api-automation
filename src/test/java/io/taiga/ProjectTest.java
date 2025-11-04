@@ -1,4 +1,6 @@
 package io.taiga;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.models.Project;
@@ -28,7 +30,9 @@ public class ProjectTest extends TestBase {
         createdUser = AccountService.register(requestBody).then().extract().as(User.class);
     }
 
-    @Test
+    @Test(priority = 1)
+    @Owner("Sargis Sargsyan")
+    @Description("Create project and check the status code")
     public void createProject() {
         Project project = new Project();
         project.setName("Test Project Name");

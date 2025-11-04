@@ -1,5 +1,8 @@
 package io.taiga;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.TmsLink;
 import io.taiga.api.models.LoginRequestBody;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
@@ -39,6 +42,8 @@ public class TaigaLogin extends TestBase {
     }
 
     @Test
+    @Owner("Sargis Sargsyan")
+    @Description("Register user and validate the response")
     public void registerUser() {
         User newUser = AccountService.register(requestBody).
         then()
@@ -53,6 +58,8 @@ public class TaigaLogin extends TestBase {
     }
 
     @Test
+    @Owner("Sargis Sargsyan")
+    @Description("Login user and validate the response")
     public void login() {
         AccountService.register(requestBody);
         LoginRequestBody loginRequestBody = new LoginRequestBody();
