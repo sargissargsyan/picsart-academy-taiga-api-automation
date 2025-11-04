@@ -1,11 +1,13 @@
 package io.taiga;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import io.taiga.api.services.AccountService;
+import io.taiga.api.services.RegisterService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.models.Project;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
+import io.taiga.api.services.UserService;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -15,6 +17,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ProjectTest extends TestBase {
     private User createdUser;
+    private Project createdProject;
 
     @BeforeMethod
     public void beforeMethod() {
@@ -27,7 +30,15 @@ public class ProjectTest extends TestBase {
         requestBody.setFull_name("Picsart Academy");
         requestBody.setEmail(email);
         requestBody.setType("public");
-        createdUser = AccountService.register(requestBody).then().extract().as(User.class);
+        createdUser = RegisterService.register(requestBody).then().extract().as(User.class);
+    }
+
+    @AfterMethod
+    public void afterMethod() {
+        if (createdProject != null && createdUser != null) {
+            ProjectService.delete(createdProject, createdUser.getAuth_token());
+            UserService.delete(createdUser, createdUser.getAuth_token());
+        }
     }
 
     @Test(priority = 1)
@@ -40,7 +51,7 @@ public class ProjectTest extends TestBase {
         project.setCreation_template(1);
         project.setIs_private(false);
 
-        Project createdProject = ProjectService.createProject(project, createdUser.getAuth_token())
+        createdProject = ProjectService.createProject(project, createdUser.getAuth_token())
                 .then()
                     .statusCode(201)
                     .extract().as(Project.class);

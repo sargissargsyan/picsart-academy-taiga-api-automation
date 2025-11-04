@@ -2,18 +2,15 @@ package io.taiga;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import io.qameta.allure.TmsLink;
 import io.taiga.api.models.LoginRequestBody;
 import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
-import io.taiga.api.services.AccountService;
+import io.taiga.api.services.RegisterService;
+import io.taiga.api.services.AuthService;
 import io.taiga.utils.TestUtils;
-import io.taiga.utils.Urls;
 import lombok.extern.java.Log;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.*;
@@ -45,7 +42,7 @@ public class TaigaLogin extends TestBase {
     @Owner("Sargis Sargsyan")
     @Description("Register user and validate the response")
     public void registerUser() {
-        User newUser = AccountService.register(requestBody).
+        User newUser = RegisterService.register(requestBody).
         then()
                 .statusCode(201)
                 .extract().as(User.class);
@@ -61,13 +58,13 @@ public class TaigaLogin extends TestBase {
     @Owner("Sargis Sargsyan")
     @Description("Login user and validate the response")
     public void login() {
-        AccountService.register(requestBody);
+        RegisterService.register(requestBody);
         LoginRequestBody loginRequestBody = new LoginRequestBody();
         loginRequestBody.setUsername(username);
         loginRequestBody.setPassword(PASSWORD);
         loginRequestBody.setType("normal");
 
-        AccountService.login(loginRequestBody).
+        AuthService.login(loginRequestBody).
         then()
                 .statusCode(200)
                 .extract().body().as(User.class);

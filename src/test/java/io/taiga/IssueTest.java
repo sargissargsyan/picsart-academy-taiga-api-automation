@@ -1,21 +1,14 @@
 package io.taiga;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import io.qameta.allure.TmsLink;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import io.taiga.api.models.*;
-import io.taiga.api.services.AccountService;
-import io.taiga.api.services.IssueService;
-import io.taiga.api.services.IssueStatusService;
-import io.taiga.api.services.ProjectService;
-import io.taiga.listeners.AutomationRunListener;
-import io.taiga.listeners.RetryAnalyzer;
+import io.taiga.api.services.*;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.Date;
@@ -48,7 +41,7 @@ public class IssueTest extends TestBase{
         requestBody.setFull_name("Picsart Academy");
         requestBody.setEmail(email);
         requestBody.setType("public");
-        createdUser = AccountService.register(requestBody).
+        createdUser = RegisterService.register(requestBody).
                 then()
                 .spec(responseSpecification)
                 .statusCode(201)
@@ -57,7 +50,7 @@ public class IssueTest extends TestBase{
         loginRequestBody.setUsername(createdUser.getUsername());
             loginRequestBody.setPassword("Picsart12345");
         loginRequestBody.setType("normal");
-        loggedInUser = AccountService.login(loginRequestBody)
+        loggedInUser = AuthService.login(loginRequestBody)
             .then()
                 .statusCode(200)
                     .extract().as(User.class);

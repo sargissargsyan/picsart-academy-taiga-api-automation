@@ -3,7 +3,7 @@ package io.taiga;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
-import io.taiga.api.services.AccountService;
+import io.taiga.api.services.RegisterService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.UserStoryService;
 import io.taiga.api.models.Project;
@@ -33,7 +33,7 @@ public class UserStoryTest extends TestBase {
         requestBody.setFull_name("Picsart Academy");
         requestBody.setEmail(email);
         requestBody.setType("public");
-        createdUser = AccountService.register(requestBody).then().extract().as(User.class);
+        createdUser = RegisterService.register(requestBody).then().extract().as(User.class);
 
         Project project = new Project();
         project.setName("Test Project Name");
