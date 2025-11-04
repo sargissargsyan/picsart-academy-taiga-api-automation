@@ -1,5 +1,8 @@
 package io.taiga;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.TmsLink;
 import io.taiga.api.services.AccountService;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.UserStoryService;
@@ -42,6 +45,9 @@ public class UserStoryTest extends TestBase {
     }
 
     @Test
+    @TmsLink("TMS-456")
+    @Description("Testing get User Story")
+    @Owner("Sargis Sargsyan")
     public void getUserStory() {
         UserStory userStory = new UserStory();
         userStory.setProject(createdProject.getId());
@@ -56,6 +62,8 @@ public class UserStoryTest extends TestBase {
         //make assertions
     }
     @Test
+    @Description("Testing create User Story")
+    @Owner("Sargis Sargsyan")
     public void createUserStory() {
         UserStory userStory = new UserStory();
         userStory.setProject(createdProject.getId());
@@ -67,6 +75,8 @@ public class UserStoryTest extends TestBase {
         //make assertions
     }
     @Test
+    @Description("Testing edit User Story")
+    @Owner("Sargis Sargsyan")
     public void editUserStory() {
         UserStory userStory = new UserStory();
         userStory.setProject(createdProject.getId());
@@ -90,13 +100,13 @@ public class UserStoryTest extends TestBase {
         userStory.setSubject("Test Subject " + new Random().nextInt(1000));
         UserStory createdUserStory = UserStoryService
                 .create(userStory, createdUser.getAuth_token())
-                .then().extract().as(UserStory.class);
+                .then().log().all().extract().as(UserStory.class);
 
         UserStoryService.delete(createdUserStory, createdUser.getAuth_token())
-                .then().assertThat().statusCode(204);
+                .then().log().all().assertThat().statusCode(204);
 
         UserStoryService.get(createdUserStory.getId(), createdUser.getAuth_token())
-                .then().statusCode(404);
+                .then().log().all().statusCode(404);
 
         System.out.printf("Deleted UserStory: %s\n", createdUserStory);
         //make assertions
