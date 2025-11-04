@@ -1,4 +1,4 @@
-package io.taiga;
+package io.taiga.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.taiga.api.services.RegisterService;

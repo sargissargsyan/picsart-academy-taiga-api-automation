@@ -9,10 +9,10 @@
 <!--    </pakages>-->
     <test name="Taiga Project Area" parallel="methods" thread-count="3" verbose="1">
         <classes>
-            <class name="io.taiga.ProjectTest"/>
-            <class name="io.taiga.IssueTest"/>
-            <class name="io.taiga.TaigaLogin"/>
-            <class name="io.taiga.UserStoryTest"/>
+            <class name="io.taiga.api.ProjectTest"/>
+            <class name="io.taiga.api.IssueTest"/>
+            <class name="io.taiga.api.TaigaLogin"/>
+            <class name="io.taiga.api.UserStoryTest"/>
         </classes>
     </test>
 
