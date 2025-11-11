@@ -15,5 +15,9 @@
             <class name="io.taiga.api.UserStoryTest"/>
         </classes>
     </test>
-
+    <test name="Taiga Project Area Selenium" parallel="methods" thread-count="3" verbose="1">
+        <classes>
+            <class name="io.taiga.selenium.LoginTest"/>
+        </classes>
+    </test>
 </suite>
