@@ -11,7 +11,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import java.util.List;
+
+import static org.testng.Assert.*;
 
 public class FirstSeleniumTest {
     private WebDriver driver;
@@ -81,6 +83,35 @@ public class FirstSeleniumTest {
         String message = driver.findElement(By.cssSelector(".lead")).getText();
 
         assertEquals(message, "Received!", "Label was Incorrect!");
+    }
+
+
+    @Test
+    public void checkbox() {
+        driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+        WebElement checkbox1 =  driver.findElement(By.id("my-check-1"));
+        WebElement checkbox2 =  driver.findElement(By.id("my-check-2"));
+        assertTrue(checkbox1.isSelected(), "Checkbox was not selected!");
+        assertFalse(checkbox2.isSelected(), "Checkbox was selected!");
+
+        checkbox1.click();
+        checkbox2.click();
+        assertFalse(checkbox1.isSelected(), "Checkbox was selected!");
+        assertTrue(checkbox2.isSelected(), "Checkbox was not selected!");
+
+        List<WebElement> checkboxes = driver.findElements(By.cssSelector(".form-check-label"));
+
+        for (WebElement checkbox : checkboxes) {
+            if (checkbox.getText().equals("Default radio")) {
+                checkbox.click();
+
+            }
+
+        }
+        driver.findElement(By.cssSelector(".form-check"))
+                .findElements(By.tagName("label")).get(0)
+                .findElement(By.tagName("input")).isSelected();
+
     }
 
 
