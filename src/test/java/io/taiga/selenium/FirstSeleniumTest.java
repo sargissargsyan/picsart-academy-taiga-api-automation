@@ -2,6 +2,7 @@ package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -141,6 +142,22 @@ public class FirstSeleniumTest {
         String absalutePath = path.toAbsolutePath().toString();
 
         fileInput.sendKeys(absalutePath);
+    }
+
+
+    @Test
+    public void slider() throws IOException {
+
+        driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+        WebElement slider = driver.findElement(By.name("my-range"));
+        String value = slider.getAttribute("value");
+        String maxValue = slider.getAttribute("max");
+        String minValue = slider.getAttribute("min");
+
+        for (int i = 0; i < 4; i++) {
+            slider.sendKeys(Keys.ARROW_RIGHT);
+        }
+
     }
 
 }
