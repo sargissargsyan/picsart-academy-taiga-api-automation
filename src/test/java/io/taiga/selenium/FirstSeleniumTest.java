@@ -6,6 +6,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.Select;
@@ -157,6 +158,58 @@ public class FirstSeleniumTest {
         for (int i = 0; i < 4; i++) {
             slider.sendKeys(Keys.ARROW_RIGHT);
         }
+
+
+    }
+    @Test
+    public void rightClick() throws IOException {
+
+        Actions actions = new Actions(driver);
+
+        driver.get( "https://bonigarcia.dev/selenium-webdriver-java/dropdown-menu.html");
+        WebElement dropdown1 = driver.findElement(By.id("my-dropdown-1"));
+        dropdown1.click();
+
+        WebElement dropdown2 = driver.findElement(By.id("my-dropdown-2"));
+        actions.contextClick(dropdown2).build().perform();
+
+        WebElement dropdown3 = driver.findElement(By.id("my-dropdown-3"));
+        actions.doubleClick(dropdown3).build().perform();
+
+
+    }
+
+    @Test
+    public void hover() {
+
+        Actions actions = new Actions(driver);
+
+        driver.get( "https://bonigarcia.dev/selenium-webdriver-java/mouse-over.html");
+
+
+        WebElement compass = driver.findElement(By.cssSelector("[src='img/compass.png']"));
+        actions.moveToElement(compass).build().perform();
+        WebElement caption = driver.findElement(RelativeLocator.with(By.tagName("div")).near(compass));
+
+        assertEquals(caption.getText(), "Compass", "Caption was Incorrect!");
+
+        WebElement calendar = driver.findElement(By.cssSelector("[src='img/calendar.png']"));
+        actions.moveToElement(calendar).build().perform();
+        caption = driver.findElement(RelativeLocator.with(By.tagName("div")).near(calendar));
+
+        assertEquals(caption.getText(), "Calendar", "Caption was Incorrect!");
+
+        WebElement award = driver.findElement(By.cssSelector("[src='img/award.png']"));
+        actions.moveToElement(award).build().perform();
+        caption = driver.findElement(RelativeLocator.with(By.tagName("div")).near(award));
+
+        assertEquals(caption.getText(), "Award", "Caption was Incorrect!");
+        WebElement landscape = driver.findElement(By.cssSelector("[src='img/landscape.png']"));
+        actions.moveToElement(landscape).build().perform();
+        caption = driver.findElement(RelativeLocator.with(By.tagName("div")).near(landscape));
+
+        assertEquals(caption.getText(), "Landscape", "Caption was Incorrect!");
+
 
     }
 
