@@ -13,6 +13,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -126,6 +129,18 @@ public class FirstSeleniumTest {
         Select select = new Select(driver.findElement(By.name("my-select")));
         select.selectByValue("2");
         assertEquals(select.getFirstSelectedOption().getText(), "Two", "Selected value was Incorrect!");
+    }
+
+    @Test
+    public void fileUpload() throws IOException {
+
+        driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+        WebElement fileInput = driver.findElement(By.name("my-file"));
+
+        Path path = Files.createTempFile("temp", ".png");
+        String absalutePath = path.toAbsolutePath().toString();
+
+        fileInput.sendKeys(absalutePath);
     }
 
 }
