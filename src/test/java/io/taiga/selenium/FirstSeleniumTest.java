@@ -5,7 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -89,6 +91,9 @@ public class FirstSeleniumTest {
     @Test
     public void checkbox() {
         driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+
+        driver.findElement(new ByIdOrName("my-text-id")).click();
+
         WebElement checkbox1 =  driver.findElement(By.id("my-check-1"));
         WebElement checkbox2 =  driver.findElement(By.id("my-check-2"));
         assertTrue(checkbox1.isSelected(), "Checkbox was not selected!");
@@ -114,5 +119,13 @@ public class FirstSeleniumTest {
 
     }
 
+    @Test
+    public void select() {
+
+        driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+        Select select = new Select(driver.findElement(By.name("my-select")));
+        select.selectByValue("2");
+        assertEquals(select.getFirstSelectedOption().getText(), "Two", "Selected value was Incorrect!");
+    }
 
 }
