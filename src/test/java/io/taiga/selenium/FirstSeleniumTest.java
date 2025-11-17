@@ -209,8 +209,24 @@ public class FirstSeleniumTest {
         caption = driver.findElement(RelativeLocator.with(By.tagName("div")).near(landscape));
 
         assertEquals(caption.getText(), "Landscape", "Caption was Incorrect!");
-
-
     }
 
+
+    @Test
+    public void dragAndDrop() {
+        Actions actions = new Actions(driver);
+        driver.get( "https://bonigarcia.dev/selenium-webdriver-java/drag-and-drop.html");
+        WebElement draggable = driver.findElement(By.id("draggable"));
+        WebElement droppable = driver.findElement(By.id("target"));
+
+        actions.dragAndDrop(draggable, droppable).build().perform();
+
+        actions.dragAndDropBy(draggable, 100, 0)
+                .dragAndDropBy(draggable, 0, 100)
+                .dragAndDropBy(draggable, -100, -50)
+                .dragAndDropBy(draggable, 0,0).build().perform();
+
+        actions.dragAndDropBy(draggable, driver.manage().window().getSize().getHeight()-100, driver.manage().window().getSize().getWidth()-300).build().perform();
+
+    }
 }
