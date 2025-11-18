@@ -11,6 +11,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.testng.Assert.assertEquals;
 
 public class LoginTest {
@@ -25,6 +27,7 @@ public class LoginTest {
     @BeforeMethod
     public void setUp() {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
     }
 
     @AfterMethod
@@ -38,7 +41,6 @@ public class LoginTest {
     @Test
     public void invalidLogin() throws InterruptedException {
         driver.get("https://tree.taiga.io/login");
-        Thread.sleep(3000);
         WebElement usernameFiled = driver.findElement(By.name("username"));
 
         String usernamePlaceHolderText = usernameFiled.getAttribute("placeholder");

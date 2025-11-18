@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -251,5 +252,14 @@ public class FirstSeleniumTest {
         actions.release().build().perform();
 
         System.out.printf("jh");
+    }
+
+    @Test
+    public void implicitWait() {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/loading-images.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement compass = driver.findElement(By.id("compass"));
+        assertTrue(compass.getAttribute("src").contains("img/compass.png"), "Src was Incorrect!");
+
     }
 }
