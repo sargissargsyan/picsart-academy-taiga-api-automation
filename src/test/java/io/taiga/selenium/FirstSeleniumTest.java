@@ -228,5 +228,5 @@ public class FirstSeleniumTest {
 
         actions.dragAndDropBy(draggable, driver.manage().window().getSize().getHeight()-100, driver.manage().window().getSize().getWidth()-300).build().perform();
 
-    }
+    }   
 }
