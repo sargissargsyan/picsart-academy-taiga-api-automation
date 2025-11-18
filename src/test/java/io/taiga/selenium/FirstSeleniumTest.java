@@ -228,5 +228,28 @@ public class FirstSeleniumTest {
 
         actions.dragAndDropBy(draggable, driver.manage().window().getSize().getHeight()-100, driver.manage().window().getSize().getWidth()-300).build().perform();
 
-    }   
+    }
+
+    @Test
+    public void draw() {
+        Actions actions = new Actions(driver);
+        driver.get( "https://bonigarcia.dev/selenium-webdriver-java/draw-in-canvas.html");
+        WebElement canvas = driver.findElement(By.id("my-canvas"));
+
+
+        actions.moveToElement(canvas);
+        actions.clickAndHold();
+        int radius = 50;
+        int numberOfPoints = 36;
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            double angle = Math.toDegrees(360/ 36 * i);
+            double x = Math.sin(angle) * radius;
+            double y = Math.cos(angle) * radius;
+            actions.moveByOffset((int)x, (int)y);
+        }
+        actions.release().build().perform();
+
+        System.out.printf("jh");
+    }
 }
