@@ -1,15 +1,12 @@
 package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.locators.RelativeLocator;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -260,6 +257,72 @@ public class FirstSeleniumTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         WebElement compass = driver.findElement(By.id("compass"));
         assertTrue(compass.getAttribute("src").contains("img/compass.png"), "Src was Incorrect!");
+
+    }
+
+    @Test
+    public void explicitWait() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("window.scrollBy(0,1000);");
+        Thread.sleep(500);
+        jsExecutor.executeScript("window.scrollBy(0,10);");
+        jsExecutor.executeScript("window.scrollBy(0,10);");
+        jsExecutor.executeScript("window.scrollBy(0,10);");
+        jsExecutor.executeScript("window.scrollBy(0,10);");
+        jsExecutor.executeScript("window.scrollBy(0,10);");
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='3']")));
+
+        driver.findElement(By.xpath("//span[text()='3']")).click();
+        driver.findElement(By.xpath("//span[text()='+']")).click();
+        driver.findElement(By.xpath("//span[text()='2']")).click();
+        driver.findElement(By.xpath("//span[text()='=']")).click();
+
+
+        wait.until(ExpectedConditions.textToBe(By.cssSelector(".screen"), "5"));
+
+        Wait<WebDriver> fluentWait= new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(1000))
+                .ignoring(NoSuchElementException.class);
+
+        assertEquals(driver.findElement(By.cssSelector(".screen")).getText(), "5", "Result was Incorrect!");
+
+    }
+
+    @Test
+    public void scroll() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/long-page.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        WebElement lastP = driver.findElement(By.cssSelector("p:last-child"));
+        jsExecutor.executeScript("arguments[0].scrollIntoView();", lastP);
+
+        jsExecutor.executeScript("window.scrollBy(0,1000);");
+        jsExecutor.executeScript("window.scrollBy(0,1000);");
+        jsExecutor.executeScript("window.scrollBy(0,1000);");
+
+    }
+
+    @Test
+    public void alerts() throws InterruptedException {
+        driver.get("https://www.selenium.dev/selenium/web/alerts.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.findElement(By.id("alert")).click();
+        Alert alert = driver.switchTo().alert();
+        assertEquals(alert.getText(), "cheese", "Alert was Incorrect!");
+        alert.accept();
+
+        driver.findElement(By.id("prompt")).click();
+        alert.sendKeys("cheese");
+        alert.dismiss();
+
+
 
     }
 }
