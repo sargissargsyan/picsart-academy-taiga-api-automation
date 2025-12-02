@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-import static org.testng.Assert.assertTrue;
 
 public class ProjectTest extends TestBase {
     private User createdUser;
