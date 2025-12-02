@@ -2,6 +2,7 @@ package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,8 +15,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class LoginTest {
     private WebDriver driver;
@@ -47,6 +50,18 @@ public class LoginTest {
     @Test
     public void invalidLogin() throws InterruptedException {
         driver.get("https://tree.taiga.io/login");
+
+        assertTrue(driver.findElement(By.cssSelector("cookie-warning")).isDisplayed());
+
+        Set<Cookie> cookieSet = driver.manage().getCookies();
+        assertEquals(cookieSet.size(), 0, "Cookie was not set!");
+
+        Cookie cookie = new Cookie("cookieConsent", "1");
+        driver.manage().addCookie(cookie);
+        cookieSet = driver.manage().getCookies();
+        assertEquals(cookieSet.size(), 1, "Cookie was not set!");
+
+        driver.navigate().refresh();
         WebElement usernameFiled = driver.findElement(By.name("username"));
 
         String usernamePlaceHolderText = usernameFiled.getAttribute("placeholder");
