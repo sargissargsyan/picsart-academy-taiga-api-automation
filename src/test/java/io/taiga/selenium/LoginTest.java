@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +19,8 @@ import static org.testng.Assert.assertEquals;
 
 public class LoginTest {
     private WebDriver driver;
+    private WebDriverWait wait;
+
 
     @BeforeClass
     public void beforeClass() {
@@ -28,6 +32,8 @@ public class LoginTest {
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
     }
 
     @AfterMethod
@@ -56,7 +62,8 @@ public class LoginTest {
 
         WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
         submitButton.click();
-        Thread.sleep(1500);
+        wait.until(ExpectedConditions.textToBe(By.cssSelector(".notification-light.notification-message-light-error .warning"),
+                "Oops, something went wrong..."));
 
         String errorMessage = driver.findElement(By.cssSelector(".notification-message-light-error.active")).getText();
         assertEquals(errorMessage, "Oops, something went wrong...\n" +

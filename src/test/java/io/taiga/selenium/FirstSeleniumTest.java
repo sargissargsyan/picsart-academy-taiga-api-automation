@@ -325,4 +325,28 @@ public class FirstSeleniumTest {
 
 
     }
+    @Test
+    public void storages() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/cookies.html");
+        driver.manage().getCookies();
+        driver.manage().getCookieNamed("username");
+
+        Cookie cookie = new Cookie("username", "admin");
+        driver.manage().addCookie(cookie);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.findElement(By.id("alert")).click();
+        Alert alert = driver.switchTo().alert();
+        assertEquals(alert.getText(), "cheese", "Alert was Incorrect!");
+        alert.accept();
+
+        driver.findElement(By.id("prompt")).click();
+        alert.sendKeys("cheese");
+        alert.dismiss();
+
+
+
+    }
 }
