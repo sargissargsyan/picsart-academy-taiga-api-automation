@@ -326,27 +326,26 @@ public class FirstSeleniumTest {
 
     }
     @Test
-    public void storages() throws InterruptedException {
+    public void cookies() throws InterruptedException {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/cookies.html");
         driver.manage().getCookies();
         driver.manage().getCookieNamed("username");
 
         Cookie cookie = new Cookie("username", "admin");
         driver.manage().addCookie(cookie);
+    }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    @Test
+    public void localStorage() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-storage.html");
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 
-        driver.findElement(By.id("alert")).click();
-        Alert alert = driver.switchTo().alert();
-        assertEquals(alert.getText(), "cheese", "Alert was Incorrect!");
-        alert.accept();
+        jsExecutor.executeScript("localStorage.setItem('username', 'admin');");
 
-        driver.findElement(By.id("prompt")).click();
-        alert.sendKeys("cheese");
-        alert.dismiss();
+        driver.findElement(By.id("display-local")).click();
+        String localStorageText = driver.findElement(By.id("local-storage")).getText();
 
-
+        assertEquals(localStorageText, "{\"username\":\"admin\"}", "LocalStorage was Incorrect!");
 
     }
 }

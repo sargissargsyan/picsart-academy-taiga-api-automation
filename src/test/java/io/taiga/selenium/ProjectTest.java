@@ -57,17 +57,10 @@ public class ProjectTest {
     }
 
     @Test
-    public void invalidLogin() throws InterruptedException {
+    public void projectTest() throws InterruptedException {
         driver.get("http://localhost:9000/login");
 
-        WebElement usernameFiled = driver.findElement(By.name("username"));
-        usernameFiled.sendKeys(createdUser.getUsername());
 
-        WebElement passwordFiled = driver.findElement(By.name("password"));
-        passwordFiled.sendKeys("Picsart12345");
-        WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        submitButton.click();
-        Thread.sleep(1500);
 
         driver.get("http://localhost:9000/project/" + createdProject.getSlug());
         System.out.printf("sfdsd");
