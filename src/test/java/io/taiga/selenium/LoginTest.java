@@ -36,11 +36,13 @@ public class LoginTest extends TestSeleniumBase {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.goTo();
         assertEquals(loginPage.getUsernamePlaceholderText(),
-                "Username or email (case sensitive)", "Username placeholder was Incorrect!");
+                "Username or email (case sensitive)",
+                "Username placeholder was Incorrect!");
         loginPage.fillUsername("invalid");
 
         assertEquals(loginPage.getPasswordPlaceholderText(),
-                "Password (case sensitive)", "Password placeholder was Incorrect!");
+                "Password (case sensitive)",
+                "Password placeholder was Incorrect!");
         loginPage.fillPassword("invalid");
         loginPage.clickLoginButton();
         assertEquals(loginPage.getErrorMessage(), "Oops, something went wrong...\n" +

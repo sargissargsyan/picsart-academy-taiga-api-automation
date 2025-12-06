@@ -4,10 +4,8 @@ import io.taiga.selenium.wait.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage {
-    private static final String BASE_URL = "http://localhost:9000";
+public class LoginPage extends PageBase {
     private static final String URL_PATH = "/login";
-    private WebDriver driver;
     private By usernameFiled = By.name("username");
     private By passwordFiled = By.name("password");
     private By loginButton = By.cssSelector("button[type='submit']");
@@ -16,7 +14,7 @@ public class LoginPage {
     private By cookieWarning = By.cssSelector("cookie-warning");
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super.driver = driver;
     }
 
     public void goTo() {
@@ -42,10 +40,6 @@ public class LoginPage {
 
     public boolean isCookiesWarningDisplayed() {
         return driver.findElement(cookieWarning).isDisplayed();
-    }
-
-    private String getPlaceholderText(By locator) {
-        return driver.findElement(locator).getAttribute("placeholder");
     }
 
     public String getUsernamePlaceholderText() {
