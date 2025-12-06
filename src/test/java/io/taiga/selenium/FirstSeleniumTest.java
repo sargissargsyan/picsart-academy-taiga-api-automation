@@ -1,6 +1,7 @@
 package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.taiga.selenium.base.TestSeleniumBase;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -20,27 +21,9 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-public class FirstSeleniumTest {
-    private WebDriver driver;
-
-    @BeforeClass
-    public void beforeClass() {
-        WebDriverManager.chromedriver().setup();
-    }
+public class FirstSeleniumTest extends TestSeleniumBase {
 
 
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
 
     @Test
     public void uiTest() {

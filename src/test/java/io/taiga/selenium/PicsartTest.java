@@ -1,6 +1,7 @@
 package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.taiga.selenium.base.TestSeleniumBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,29 +17,9 @@ import java.time.Duration;
 
 import static org.testng.Assert.assertEquals;
 
-public class PicsartTest {
-    private WebDriver driver;
-
-    @BeforeClass
-    public void beforeClass() {
-        WebDriverManager.chromedriver().setup();
-    }
+public class PicsartTest extends TestSeleniumBase {
 
 
-    @BeforeMethod
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
     @Test
     public void uiTest() throws InterruptedException {
         driver.get("https://picsartstage2.com/");
