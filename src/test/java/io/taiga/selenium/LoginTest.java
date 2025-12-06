@@ -3,6 +3,7 @@ package io.taiga.selenium;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.taiga.api.TestBase;
 import io.taiga.selenium.base.TestSeleniumBase;
+import io.taiga.selenium.pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -31,10 +32,28 @@ public class LoginTest extends TestSeleniumBase {
     }
 
     @Test
-    public void invalidLogin() throws InterruptedException {
-        driver.get("https://tree.taiga.io/login");
+    public void invalidLogin() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.goTo();
+        assertEquals(loginPage.getUsernamePlaceholderText(),
+                "Username or email (case sensitive)", "Username placeholder was Incorrect!");
+        loginPage.fillUsername("invalid");
 
-        assertTrue(driver.findElement(By.cssSelector("cookie-warning")).isDisplayed());
+        assertEquals(loginPage.getPasswordPlaceholderText(),
+                "Password (case sensitive)", "Password placeholder was Incorrect!");
+        loginPage.fillPassword("invalid");
+        loginPage.clickLoginButton();
+        assertEquals(loginPage.getErrorMessage(), "Oops, something went wrong...\n" +
+                "According to the Taiga, your username/email or password are incorrect.",
+                "Error message was Incorrect!");
+    }
+
+    @Test
+    public void cookieTest() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.goTo();
+
+        assertTrue(loginPage.isCookiesWarningDisplayed());
 
         Set<Cookie> cookieSet = driver.manage().getCookies();
         assertEquals(cookieSet.size(), 0, "Cookie was not set!");
@@ -45,28 +64,6 @@ public class LoginTest extends TestSeleniumBase {
         assertEquals(cookieSet.size(), 1, "Cookie was not set!");
 
         driver.navigate().refresh();
-        WebElement usernameFiled = driver.findElement(By.name("username"));
-
-        String usernamePlaceHolderText = usernameFiled.getAttribute("placeholder");
-        assertEquals(usernamePlaceHolderText, "Username or email (case sensitive)", "Username placeholder was Incorrect!");
-
-        usernameFiled.sendKeys("invalid");
-
-        WebElement passwordFiled = driver.findElement(By.name("password"));
-        String passwordPlaceHolderText = passwordFiled.getAttribute("placeholder");
-        assertEquals(passwordPlaceHolderText, "Password (case sensitive)", "Password placeholder was Incorrect!");
-
-        passwordFiled.sendKeys("invalid");
-
-        WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        submitButton.click();
-        wait.until(ExpectedConditions.textToBe(By.cssSelector(".notification-light.notification-message-light-error .warning"),
-                "Oops, something went wrong..."));
-
-        String errorMessage = driver.findElement(By.cssSelector(".notification-message-light-error.active")).getText();
-        assertEquals(errorMessage, "Oops, something went wrong...\n" +
-                "According to the Taiga, your username/email or password are incorrect.", "Error message was Incorrect!");
-
 
     }
 }

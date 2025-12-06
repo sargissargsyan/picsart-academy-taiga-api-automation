@@ -18,4 +18,9 @@ public class WaitUtils {
         return new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
+    public static Boolean waitTextToBe(WebDriver driver, By locator, String text) {
+        return new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.textToBe(locator, text));
+    }
 }
