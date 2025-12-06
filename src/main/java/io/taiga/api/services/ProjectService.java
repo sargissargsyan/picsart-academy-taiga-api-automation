@@ -4,8 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.taiga.api.models.Project;
-import io.taiga.api.models.Project;
-import io.taiga.utils.Urls;
+import io.taiga.api.Urls;
 
 public class ProjectService extends BaseService {
     @Step("Create a Project")

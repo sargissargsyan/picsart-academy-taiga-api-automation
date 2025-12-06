@@ -1,10 +1,9 @@
 package io.taiga.api.services;
 
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.taiga.utils.Urls;
+import io.taiga.api.Urls;
 
 public class IssueStatusService extends BaseService {
     @Step("Get project issue statuses")

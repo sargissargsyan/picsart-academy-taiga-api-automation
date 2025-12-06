@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.taiga.api.models.LoginRequestBody;
-import io.taiga.utils.Urls;
+import io.taiga.api.Urls;
 
 public class AuthService extends BaseService {
     @Step("Login with a user")

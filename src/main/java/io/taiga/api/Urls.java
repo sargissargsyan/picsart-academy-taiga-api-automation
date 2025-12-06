@@ -1,4 +1,4 @@
-package io.taiga.utils;
+package io.taiga.api;
 
 public class Urls {
     public static final String REGISTER_URL = "/api/v1/auth/register";

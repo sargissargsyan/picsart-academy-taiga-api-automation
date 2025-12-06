@@ -7,9 +7,8 @@ import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.RegisterService;
+import io.taiga.selenium.base.TestSeleniumBase;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -20,10 +19,9 @@ import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
 
-public class ProjectTest {
+public class ProjectTest extends TestSeleniumBase {
     private User createdUser;
     private Project createdProject;
-    private WebDriver driver;
     private WebDriverWait wait;
     private Response response;
 
@@ -56,8 +54,6 @@ public class ProjectTest {
                 .statusCode(201)
                 .extract().as(Project.class);
 
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 

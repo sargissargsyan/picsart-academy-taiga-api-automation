@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.taiga.api.models.Issue;
-import io.taiga.utils.Urls;
+import io.taiga.api.Urls;
 
 public class IssueService extends BaseService {
     @Step("Create an issue")
