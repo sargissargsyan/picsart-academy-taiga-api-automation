@@ -1,5 +1,6 @@
 package io.taiga.selenium.pages.components;
 
+import io.taiga.selenium.pages.NewProjectPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -23,12 +24,13 @@ public class TopNavigationComponent {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".navbar")));
     }
 
-    public void clickCreateProject() {
+    public NewProjectPage clickCreateProject() {
         Actions actions = new Actions(driver);
         //Hover to projects item
         actions.moveToElement(driver.findElement(projectItem)).build().perform();
         //Click on New project item
         driver.findElement(createProjectItem).click();
+        return new NewProjectPage(driver);
     }
 
 

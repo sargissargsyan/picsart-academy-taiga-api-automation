@@ -9,7 +9,11 @@ import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.RegisterService;
 import io.taiga.api.services.UserService;
 import io.taiga.selenium.base.TestSeleniumBase;
+import io.taiga.selenium.pages.NewDuplicateProjectPage;
+import io.taiga.selenium.pages.NewProjectPage;
+import io.taiga.selenium.pages.NewScrumProjectPage;
 import io.taiga.selenium.pages.components.TopNavigationComponent;
+import io.taiga.utils.TestUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
@@ -80,7 +84,41 @@ public class ProjectTest extends TestSeleniumBase {
 
         driver.get("http://localhost:9000");
         TopNavigationComponent navBar = new TopNavigationComponent(driver);
-        navBar.clickCreateProject();
+
+        NewProjectPage newProjectPage = navBar.clickCreateProject();
+
+        NewScrumProjectPage newScrumProjectPage = newProjectPage.selectScrum();
+
+
+        newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
+        newScrumProjectPage.setDescription("Project Scrum " + TestUtils.randomString(5));
+        newScrumProjectPage.clickPublicTemplate();
+        newScrumProjectPage.clickSubmitButton();
+
+        System.out.printf("sfdsd");
+    }
+
+    @Test
+    public void duplicateProject() throws InterruptedException {
+        driver.get("http://localhost:9000/login");
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
+        jsExecutor.executeScript("localStorage.setItem('token', '\""+ createdUser.getAuth_token() +"\"')");
+        UserService.skipNewsletter(createdUser.getAuth_token());
+
+        driver.get("http://localhost:9000");
+        TopNavigationComponent navBar = new TopNavigationComponent(driver);
+
+        NewProjectPage newProjectPage = navBar.clickCreateProject();
+
+        NewDuplicateProjectPage newScrumProjectPage = newProjectPage.selectDuplicate();
+
+        newScrumProjectPage.selectTargetProject();
+        newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
+        newScrumProjectPage.setDescription("Project Scrum " + TestUtils.randomString(5));
+        newScrumProjectPage.clickPublicTemplate();
+        newScrumProjectPage.clickSubmitButton();
+
         System.out.printf("sfdsd");
     }
 }
