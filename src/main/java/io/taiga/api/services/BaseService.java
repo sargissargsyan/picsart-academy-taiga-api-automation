@@ -43,6 +43,11 @@ public class BaseService {
         return requestSpecification.patch();
     }
 
+    protected static Response put(RequestSpecification requestSpecification) {
+        requestSpecification.log().ifValidationFails();
+        return requestSpecification.put();
+    }
+
     protected static Response delete(RequestSpecification requestSpecification) {
         requestSpecification.log().ifValidationFails();
         return requestSpecification.delete();

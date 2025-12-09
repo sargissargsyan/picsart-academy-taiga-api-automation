@@ -7,7 +7,9 @@ import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.RegisterService;
+import io.taiga.api.services.UserService;
 import io.taiga.selenium.base.TestSeleniumBase;
+import io.taiga.selenium.pages.components.TopNavigationComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
@@ -65,6 +67,20 @@ public class ProjectTest extends TestSeleniumBase {
 
 
         driver.get("http://localhost:9000/project/" + createdProject.getSlug());
+        System.out.printf("sfdsd");
+    }
+
+    @Test
+    public void createProject() throws InterruptedException {
+        driver.get("http://localhost:9000/login");
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
+        jsExecutor.executeScript("localStorage.setItem('token', '\""+ createdUser.getAuth_token() +"\"')");
+        UserService.skipNewsletter(createdUser.getAuth_token());
+
+        driver.get("http://localhost:9000");
+        TopNavigationComponent navBar = new TopNavigationComponent(driver);
+        navBar.clickCreateProject();
         System.out.printf("sfdsd");
     }
 }
