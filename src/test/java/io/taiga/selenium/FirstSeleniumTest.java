@@ -4,6 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.taiga.selenium.base.TestSeleniumBase;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v142.performance.Performance;
+import org.openqa.selenium.devtools.v142.performance.model.Metric;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.locators.RelativeLocator;
@@ -18,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 import static org.testng.Assert.*;
 
@@ -140,6 +144,15 @@ public class FirstSeleniumTest extends TestSeleniumBase {
             slider.sendKeys(Keys.ARROW_RIGHT);
         }
 
+        DevTools devTools = ((ChromeDriver) driver).getDevTools();
+
+        devTools.createSession();
+        devTools.send(Performance.enable(Optional.empty()));
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
+
+        List<Metric> metrics = devTools.send(Performance.getMetrics());
+
+        metrics.forEach(metric -> System.out.printf("{}: {}", metric.getName(), metric.getValue()));
 
     }
     @Test

@@ -83,14 +83,18 @@ public class ProjectTest extends TestSeleniumBase {
         UserService.skipNewsletter(createdUser.getAuth_token());
 
         driver.get("http://localhost:9000");
-        TopNavigationComponent navBar = new TopNavigationComponent(driver);
+//        TopNavigationComponent navBar = new TopNavigationComponent(driver);
+//
+//        NewProjectPage newProjectPage = navBar.clickCreateProject();
+//
+//        NewScrumProjectPage newScrumProjectPage = newProjectPage.selectScrum();
 
-        NewProjectPage newProjectPage = navBar.clickCreateProject();
 
-        NewScrumProjectPage newScrumProjectPage = newProjectPage.selectScrum();
+        NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent(driver)
+                .clickCreateProject()
+                .selectScrum();
 
-
-        newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
+                newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
         newScrumProjectPage.setDescription("Project Scrum " + TestUtils.randomString(5));
         newScrumProjectPage.clickPublicTemplate();
         newScrumProjectPage.clickSubmitButton();
