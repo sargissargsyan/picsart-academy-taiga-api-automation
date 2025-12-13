@@ -2,6 +2,7 @@ package io.taiga.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public abstract class AbstractNewProjectPage extends PageBase {
     private By backButton = By.cssSelector(".create-project-action-cancel");
@@ -11,27 +12,29 @@ public abstract class AbstractNewProjectPage extends PageBase {
     private By projectTemplatesField = By.cssSelector(".create-project-privacity fieldset");
 
     public void setName(String projectName) {
-        driver.findElement(projectNameField).sendKeys(projectName);
+        type(projectNameField, projectName);
     }
 
     public void setDescription(String description) {
-        driver.findElement(projectDescriptionField).sendKeys(description);
+        type(projectDescriptionField, description);
     }
 
     public void clickPrivateTemplate() {
-        driver.findElements(projectTemplatesField).get(1).click();
+        WebElement privateTemplateOption = findElements(projectTemplatesField).get(1);
+        click(privateTemplateOption);
     }
 
     public void clickPublicTemplate() {
-        driver.findElements(projectTemplatesField).get(0).click();
+        WebElement publicTemplateOption = findElements(projectTemplatesField).get(0);
+        click(publicTemplateOption);
     }
 
     public NewProjectPage clickBackButton() {
-        driver.findElement(backButton).click();
+        click(backButton);
         return new NewProjectPage(driver);
     }
 
     public void clickSubmitButton() {
-        driver.findElement(submitButton).click();
+        click(submitButton);
     }
 }
