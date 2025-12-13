@@ -20,21 +20,21 @@ public class NewProjectPage extends PageBase {
     }
 
     public NewScrumProjectPage selectScrum() {
-        driver.findElement(scrumItem).click();
+        click(scrumItem);
         return new NewScrumProjectPage(driver);
     }
 
     public NewKanbanProjectPage selectKanban() {
-        driver.findElement(kanbanItem).click();
+        find(kanbanItem).click();
         return new NewKanbanProjectPage(driver);
     }
 
     public NewDuplicateProjectPage selectDuplicate() {
-        driver.findElement(duplicateItem).click();
+        find(duplicateItem).click();
         return new NewDuplicateProjectPage(driver);
     }
 
     public void selectImport() {
-        driver.findElement(importItem).click();
+        find(importItem).click();
     }
 }
