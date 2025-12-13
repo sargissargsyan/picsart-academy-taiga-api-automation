@@ -25,16 +25,16 @@ public class NewProjectPage extends PageBase {
     }
 
     public NewKanbanProjectPage selectKanban() {
-        find(kanbanItem).click();
+        click(kanbanItem);
         return new NewKanbanProjectPage(driver);
     }
 
     public NewDuplicateProjectPage selectDuplicate() {
-        find(duplicateItem).click();
+        click(duplicateItem);
         return new NewDuplicateProjectPage(driver);
     }
 
     public void selectImport() {
-        find(importItem).click();
+        click(importItem);
     }
 }
