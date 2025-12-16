@@ -3,6 +3,7 @@ package io.taiga.selenium.pages;
 import lombok.extern.java.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -47,5 +48,14 @@ public abstract class PageBase {
     protected void type(WebElement element, String text) {
         log.info("Typing text: " + text + " into element: " + element);
         element.sendKeys(text);
+    }
+
+    protected boolean isDisplayed(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (WebDriverException e) {
+            return false;
+        }
+
     }
 }
