@@ -1,5 +1,6 @@
 package io.taiga.selenium.pages;
 
+import io.taiga.selenium.factory.DriverFactory;
 import lombok.extern.java.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,10 @@ import java.util.List;
 @Log
 public abstract class PageBase {
     protected WebDriver driver;
+
+    public PageBase() {
+        this.driver = DriverFactory.get().getDriver();
+    }
 
     protected static final String BASE_URL = "http://localhost:9000";
 

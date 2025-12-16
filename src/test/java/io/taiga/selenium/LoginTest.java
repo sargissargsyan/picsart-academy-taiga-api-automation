@@ -33,7 +33,7 @@ public class LoginTest extends TestSeleniumBase {
 
     @Test
     public void invalidLogin() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.goTo();
         assertEquals(loginPage.getUsernamePlaceholderText(),
                 "Username or email (case sensitive)",
@@ -52,7 +52,7 @@ public class LoginTest extends TestSeleniumBase {
 
     @Test
     public void cookieTest() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.goTo();
 
         assertTrue(loginPage.isCookiesWarningDisplayed());

@@ -90,7 +90,7 @@ public class ProjectTest extends TestSeleniumBase {
 //        NewScrumProjectPage newScrumProjectPage = newProjectPage.selectScrum();
 
 
-        NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent(driver)
+        NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent()
                 .clickCreateProject()
                 .selectScrum();
 
@@ -111,7 +111,7 @@ public class ProjectTest extends TestSeleniumBase {
         UserService.skipNewsletter(createdUser.getAuth_token());
 
         driver.get("http://localhost:9000");
-        TopNavigationComponent navBar = new TopNavigationComponent(driver);
+        TopNavigationComponent navBar = new TopNavigationComponent();
 
         NewProjectPage newProjectPage = navBar.clickCreateProject();
 

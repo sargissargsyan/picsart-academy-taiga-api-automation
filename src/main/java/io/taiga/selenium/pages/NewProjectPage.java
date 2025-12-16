@@ -21,17 +21,17 @@ public class NewProjectPage extends PageBase {
 
     public NewScrumProjectPage selectScrum() {
         click(scrumItem);
-        return new NewScrumProjectPage(driver);
+        return new NewScrumProjectPage();
     }
 
     public NewKanbanProjectPage selectKanban() {
         click(kanbanItem);
-        return new NewKanbanProjectPage(driver);
+        return new NewKanbanProjectPage();
     }
 
     public NewDuplicateProjectPage selectDuplicate() {
         click(duplicateItem);
-        return new NewDuplicateProjectPage(driver);
+        return new NewDuplicateProjectPage();
     }
 
     public void selectImport() {

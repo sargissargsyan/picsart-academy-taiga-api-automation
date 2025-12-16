@@ -1,5 +1,6 @@
 package io.taiga.selenium.pages.components;
 
+import io.taiga.selenium.factory.DriverFactory;
 import io.taiga.selenium.pages.NewProjectPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,8 +19,8 @@ public class TopNavigationComponent {
     By createProjectItem = By.cssSelector("[tg-nav='create-project']");
     By seeMoreItem = By.cssSelector(".see-more-projects-btn");
 
-    public TopNavigationComponent(WebDriver driver) {
-        this.driver = driver;
+    public TopNavigationComponent() {
+        this.driver = DriverFactory.get().getDriver();
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".navbar")));
     }

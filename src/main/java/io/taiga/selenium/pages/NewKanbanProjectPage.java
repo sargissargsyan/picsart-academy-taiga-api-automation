@@ -7,10 +7,6 @@ public class NewKanbanProjectPage extends AbstractNewProjectPage {
 
     private static final String URL_PATH = "/project/new/kanban";
 
-    public NewKanbanProjectPage(WebDriver driver) {
-        super.driver = driver;
-    }
-
     public void goTo() {
         driver.get(BASE_URL + URL_PATH);
     }

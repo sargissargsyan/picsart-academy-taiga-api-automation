@@ -13,10 +13,6 @@ public class LoginPage extends PageBase {
     private By errorWarningMessage = By.cssSelector(".notification-light.notification-message-light-error .warning");
     private By cookieWarning = By.cssSelector("cookie-warning");
 
-    public LoginPage(WebDriver driver) {
-        super.driver = driver;
-    }
-
     public void goTo() {
         driver.get(BASE_URL + URL_PATH);
     }
