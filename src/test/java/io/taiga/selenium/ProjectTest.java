@@ -56,7 +56,7 @@ public class ProjectTest extends TestSeleniumBase {
                 .then()
                 .statusCode(201)
                 .extract().as(Project.class);
-        login(username, "Picsart12345");
+        login(createdUser);
     }
 
     @Test
@@ -69,13 +69,11 @@ public class ProjectTest extends TestSeleniumBase {
     @Test
     public void createProject() throws InterruptedException {
         new LoginPage().refresh();
-
         TopNavigationComponent navBar = new TopNavigationComponent();
         NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent()
                 .clickCreateProject()
                 .selectScrum();
-
-                newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
+        newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
         newScrumProjectPage.setDescription("Project Scrum " + TestUtils.randomString(5));
         newScrumProjectPage.clickPublicTemplate();
         newScrumProjectPage.clickSubmitButton();

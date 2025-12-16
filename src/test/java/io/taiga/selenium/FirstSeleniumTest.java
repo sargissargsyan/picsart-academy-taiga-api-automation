@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.testng.Assert.*;
 
@@ -345,5 +346,14 @@ public class FirstSeleniumTest extends TestSeleniumBase {
 
         assertEquals(localStorageText, "{\"username\":\"admin\"}", "LocalStorage was Incorrect!");
 
+    }
+
+    @Test
+    public void newTab() throws InterruptedException {
+        driver.get("https://www.selenium.dev/selenium/web/xhtmlTest.html");
+        driver.findElement(By.name("windowOne")).click();
+        Set<String> initTabHandlers = driver.getWindowHandles();
+        driver.switchTo().window(initTabHandlers.toArray()[1].toString());
+        System.out.printf(driver.findElement(By.cssSelector(".items")).getText()) ;
     }
 }

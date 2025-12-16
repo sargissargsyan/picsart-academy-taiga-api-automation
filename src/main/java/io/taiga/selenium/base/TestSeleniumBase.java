@@ -1,5 +1,6 @@
 package io.taiga.selenium.base;
 
+import com.google.gson.Gson;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.response.Response;
 import io.taiga.api.models.LoginRequestBody;
@@ -33,14 +34,23 @@ public class TestSeleniumBase {
         loginRequestBody.setUsername(username);
         loginRequestBody.setPassword(password);
         loginRequestBody.setType("normal");
-
         Response response = AuthService.login(loginRequestBody);
         User user = response.body().as(User.class);
+        loginWithApi(response.body().asString(), user.getAuth_token());
+    }
+
+    protected void login(User user) {
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(user);
+        loginWithApi(jsonObject, user.getAuth_token());
+    }
+
+    private void loginWithApi(String userJson, String token) {
         LoginPage loginPage = new LoginPage();
         loginPage.goTo();
         JavascriptExecutor jsExecutor = (JavascriptExecutor) DriverFactory.get().getDriver();
-        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
-        jsExecutor.executeScript("localStorage.setItem('token', '\""+ user.getAuth_token() +"\"')");
-        UserService.skipNewsletter(user.getAuth_token());
+        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ userJson +"');");
+        jsExecutor.executeScript("localStorage.setItem('token', '\""+ token +"\"')");
+        UserService.skipNewsletter(token);
     }
 }
