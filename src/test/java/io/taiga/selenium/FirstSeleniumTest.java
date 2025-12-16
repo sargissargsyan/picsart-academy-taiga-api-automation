@@ -356,4 +356,23 @@ public class FirstSeleniumTest extends TestSeleniumBase {
         driver.switchTo().window(initTabHandlers.toArray()[1].toString());
         System.out.printf(driver.findElement(By.cssSelector(".items")).getText()) ;
     }
+    @Test
+    public void iFrame() throws InterruptedException {
+        driver.get("https://www.selenium.dev/selenium/web/click_tests/click_in_iframe.html");
+//        driver.switchTo().frame("ifr");
+        WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        webDriverWait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("ifr")));
+        driver.findElement(By.id("link")).click();
+    }
+
+    @Test
+    public void iFrameMove() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/iframes.html");
+//        driver.switchTo().frame("ifr");
+        WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        webDriverWait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("my-iframe")));
+        //move to initial fream
+        driver.switchTo().parentFrame();
+        driver.findElement(By.cssSelector(".display-4"));
+    }
 }
