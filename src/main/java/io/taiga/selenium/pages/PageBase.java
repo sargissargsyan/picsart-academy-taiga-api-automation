@@ -23,6 +23,10 @@ public abstract class PageBase {
         return driver.findElement(locator).getAttribute("placeholder");
     }
 
+    public void refresh() {
+        driver.navigate().refresh();
+    }
+
     protected WebElement find(By locator) {
         log.info("Finding element: " + locator);
         return driver.findElement(locator);
