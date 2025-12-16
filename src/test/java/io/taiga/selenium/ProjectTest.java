@@ -7,9 +7,7 @@ import io.taiga.api.models.RegisterRequestBody;
 import io.taiga.api.models.User;
 import io.taiga.api.services.ProjectService;
 import io.taiga.api.services.RegisterService;
-import io.taiga.api.services.UserService;
 import io.taiga.selenium.base.TestSeleniumBase;
-import io.taiga.selenium.factory.DriverFactory;
 import io.taiga.selenium.pages.*;
 import io.taiga.selenium.pages.components.TopNavigationComponent;
 import io.taiga.utils.TestUtils;
@@ -58,17 +56,11 @@ public class ProjectTest extends TestSeleniumBase {
                 .then()
                 .statusCode(201)
                 .extract().as(Project.class);
-
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        login(username, "Picsart12345");
     }
 
     @Test
     public void projectTest() throws InterruptedException {
-        new LoginPage().goTo();
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
-
-
         ProjectDetailsPage projectPage = new ProjectDetailsPage();
         projectPage.goTo(createdProject);
         System.out.printf("sfdsd");
@@ -76,13 +68,7 @@ public class ProjectTest extends TestSeleniumBase {
 
     @Test
     public void createProject() throws InterruptedException {
-        LoginPage loginPage = new LoginPage();
-        loginPage.goTo();
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) DriverFactory.get().getDriver();
-        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
-        jsExecutor.executeScript("localStorage.setItem('token', '\""+ createdUser.getAuth_token() +"\"')");
-        UserService.skipNewsletter(createdUser.getAuth_token());
-        loginPage.refresh();
+        new LoginPage().refresh();
 
         TopNavigationComponent navBar = new TopNavigationComponent();
         NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent()
@@ -98,20 +84,11 @@ public class ProjectTest extends TestSeleniumBase {
     }
 
     @Test
-    public void duplicateProject() throws InterruptedException {
-        LoginPage loginPage = new LoginPage();
-        loginPage.goTo();
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) DriverFactory.get().getDriver();
-        jsExecutor.executeScript("localStorage.setItem('userInfo', '"+ response.body().asString() +"');");
-        jsExecutor.executeScript("localStorage.setItem('token', '\""+ createdUser.getAuth_token() +"\"')");
-        UserService.skipNewsletter(createdUser.getAuth_token());
-        loginPage.refresh();
+    public void duplicateProject() {
+        new LoginPage().refresh();
         TopNavigationComponent navBar = new TopNavigationComponent();
-
         NewProjectPage newProjectPage = navBar.clickCreateProject();
-
         NewDuplicateProjectPage newScrumProjectPage = newProjectPage.selectDuplicate();
-
         newScrumProjectPage.selectTargetProject();
         newScrumProjectPage.setName("Project Scrum " + TestUtils.randomString(5));
         newScrumProjectPage.setDescription("Project Scrum " + TestUtils.randomString(5));

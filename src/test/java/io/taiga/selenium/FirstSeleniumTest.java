@@ -1,7 +1,7 @@
 package io.taiga.selenium;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.taiga.selenium.base.TestSeleniumBase;
+import io.taiga.selenium.factory.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
@@ -11,8 +11,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.*;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,6 +24,10 @@ import java.util.Optional;
 import static org.testng.Assert.*;
 
 public class FirstSeleniumTest extends TestSeleniumBase {
+    @BeforeMethod
+    public void setUp() {
+        driver = DriverFactory.get().getDriver();
+    }
 
 
 
