@@ -17,11 +17,11 @@ public class TestSeleniumBase {
 
     @BeforeMethod
     public void initDriver() {
-        driver = DriverFactory.newChromeDriver();
+        driver = DriverFactory.get().getDriver();
     }
 
     @AfterMethod(alwaysRun = true)
     public void quitDriver() {
-        driver.quit();
+        DriverFactory.get().quitDriver();
     }
 }
