@@ -69,6 +69,10 @@ public class ConfigManager {
         return getProperty("base.url", "http://localhost");
     }
 
+    public String getSeleniumBrowser() {
+        return getProperty("selenium.browser", "chrome");
+    }
+
     public int getPort() {
         return getIntProperty("base.port", 9000);
     }

@@ -1,5 +1,6 @@
 package io.taiga.selenium.factory;
 
+import io.taiga.utils.ConfigManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,7 +27,11 @@ public class DriverFactory {
     }
     public WebDriver getDriver() {
         if (driverThead.get() == null) {
-            driverThead.set(newFirefoxDriver());
+            if (ConfigManager.getInstance().getSeleniumBrowser().equals("chrome")){
+                driverThead.set(newChromeDriver());
+            } else if (ConfigManager.getInstance().getSeleniumBrowser().equals("firefox")) {
+                driverThead.set(newFirefoxDriver());
+            }
         }
         return driverThead.get();
     }
