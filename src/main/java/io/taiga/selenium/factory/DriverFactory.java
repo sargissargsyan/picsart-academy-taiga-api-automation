@@ -42,8 +42,8 @@ public class DriverFactory {
                     browserOptions.setPlatformName("Windows 11");
                     browserOptions.setBrowserVersion("latest");
                     Map<String, Object> sauceOptions = new HashMap<>();
-                    sauceOptions.put("username", "");
-                    sauceOptions.put("accessKey", "");
+                    sauceOptions.put("username", ""); //set your usernamae
+                    sauceOptions.put("accessKey", ""); // set your access key
                     sauceOptions.put("build", "selenium-build-N0PCX");
                     sauceOptions.put("name", "TaigaTests");
                     sauceOptions.put("screenResolution", "1280x1024");
