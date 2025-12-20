@@ -36,8 +36,8 @@ public class ProjectTest extends TestSeleniumBase {
 
     @BeforeMethod
     public void beforeMethod() {
-        String username = "picartacademy" + new Random().nextInt(1000);
-        String email = "picsartacademy"+ new Random().nextInt(1000) + "@gmail.com";
+        String username = TestUtils.randomUsername(20);
+        String email = "picsartacademy"+ username + "@gmail.com";
         RegisterRequestBody requestBody = new RegisterRequestBody();
         requestBody.setUsername(username);
         requestBody.setPassword("Picsart12345");
@@ -68,8 +68,10 @@ public class ProjectTest extends TestSeleniumBase {
 
     @Test
     public void createProject() throws InterruptedException {
-        new LoginPage().refresh();
-        TopNavigationComponent navBar = new TopNavigationComponent();
+        LoginPage loginPage = new LoginPage();
+        loginPage.refresh();
+        loginPage.waitPageToBeLoaded();
+
         NewScrumProjectPage newScrumProjectPage = new TopNavigationComponent()
                 .clickCreateProject()
                 .selectScrum();

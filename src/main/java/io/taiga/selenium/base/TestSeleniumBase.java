@@ -21,7 +21,7 @@ public class TestSeleniumBase {
 
     @BeforeTest
     public void beforeClass() {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
     }
 
     @AfterMethod(alwaysRun = true)

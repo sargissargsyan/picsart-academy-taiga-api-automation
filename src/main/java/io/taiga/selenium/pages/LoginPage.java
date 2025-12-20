@@ -12,10 +12,13 @@ public class LoginPage extends PageBase {
     private By errorMessage = By.cssSelector(".notification-message-light-error.active");
     private By errorWarningMessage = By.cssSelector(".notification-light.notification-message-light-error .warning");
     private By cookieWarning = By.cssSelector("cookie-warning");
+    private By activeLoader = By.cssSelector(".loader.active");
 
     public void goTo() {
         driver.get(BASE_URL + URL_PATH);
     }
+
+
 
     public void fillUsername(String username) {
         driver.findElement(usernameFiled).sendKeys(username);
@@ -30,7 +33,7 @@ public class LoginPage extends PageBase {
     }
 
     public String getErrorMessage() {
-        WaitUtils.waitTextToBe(driver, errorWarningMessage, "Oops, something went wrong...");
+        WaitUtils.waitTextToBe(errorWarningMessage, "Oops, something went wrong...");
         return driver.findElement(errorMessage).getText();
     }
 

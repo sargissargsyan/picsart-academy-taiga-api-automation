@@ -2,6 +2,7 @@ package io.taiga.selenium.pages.components;
 
 import io.taiga.selenium.factory.DriverFactory;
 import io.taiga.selenium.pages.NewProjectPage;
+import io.taiga.selenium.wait.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -24,6 +25,11 @@ public class TopNavigationComponent {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".navbar")));
     }
+    public void waitPageToBeLoaded() {
+        By activeLoader = By.cssSelector(".loader.active");
+        WaitUtils.waitUntilVisible(activeLoader);
+        WaitUtils.waitUntilInVisible(activeLoader);
+    }
 
     public NewProjectPage clickCreateProject() {
         Actions actions = new Actions(driver);
@@ -31,6 +37,7 @@ public class TopNavigationComponent {
         actions.moveToElement(driver.findElement(projectItem)).build().perform();
         //Click on New project item
         driver.findElement(createProjectItem).click();
+        waitPageToBeLoaded();
         return new NewProjectPage(driver);
     }
 

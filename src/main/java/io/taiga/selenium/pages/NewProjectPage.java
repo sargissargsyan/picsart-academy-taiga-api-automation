@@ -21,6 +21,7 @@ public class NewProjectPage extends PageBase {
 
     public NewScrumProjectPage selectScrum() {
         click(scrumItem);
+        waitPageToBeLoaded();
         return new NewScrumProjectPage();
     }
 

@@ -34,6 +34,13 @@ public abstract class PageBase {
         return driver.findElement(locator);
     }
 
+    public void waitPageToBeLoaded() {
+        By activeLoader = By.cssSelector(".loader.active");
+        WaitUtils.waitUntilVisible(activeLoader);
+        WaitUtils.waitUntilInVisible(activeLoader);
+    }
+
+
     protected List<WebElement> findElements(By locator) {
         log.info("Finding element: " + locator);
         return driver.findElements(locator);

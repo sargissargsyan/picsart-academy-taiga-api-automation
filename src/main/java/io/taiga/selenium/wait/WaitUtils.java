@@ -10,22 +10,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class WaitUtils {
-    private static WebDriver driver;
-    private WaitUtils() {
-        this.driver = DriverFactory.get().getDriver();
-    }
+
     public static WebElement waitUntilClickable(By locator) {
-        return new WebDriverWait(driver, Duration.ofSeconds(5))
+        return new WebDriverWait(DriverFactory.get().getDriver(), Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     public static WebElement waitUntilVisible(By locator) {
-        return new WebDriverWait(driver, Duration.ofSeconds(5))
+        return new WebDriverWait(DriverFactory.get().getDriver(), Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public static Boolean waitUntilInVisible(By locator) {
+        return new WebDriverWait(DriverFactory.get().getDriver(), Duration.ofSeconds(5))
+                .until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
     public static Boolean waitTextToBe( By locator, String text) {
-        return new WebDriverWait(driver, Duration.ofSeconds(5))
+        return new WebDriverWait(DriverFactory.get().getDriver(), Duration.ofSeconds(5))
                 .until(ExpectedConditions.textToBe(locator, text));
     }
 }
