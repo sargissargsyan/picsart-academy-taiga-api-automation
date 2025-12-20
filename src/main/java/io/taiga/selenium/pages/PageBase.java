@@ -1,6 +1,7 @@
 package io.taiga.selenium.pages;
 
 import io.taiga.selenium.factory.DriverFactory;
+import io.taiga.selenium.wait.WaitUtils;
 import lombok.extern.java.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +30,7 @@ public abstract class PageBase {
 
     protected WebElement find(By locator) {
         log.info("Finding element: " + locator);
+        WaitUtils.waitUntilVisible(locator);
         return driver.findElement(locator);
     }
 
@@ -39,6 +41,7 @@ public abstract class PageBase {
 
     protected void click(By locator) {
         log.info("Clicking element: " + locator);
+        WaitUtils.waitUntilClickable(locator);
         WebElement element = find(locator);
         click(element);
     }
