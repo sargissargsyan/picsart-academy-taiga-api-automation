@@ -2,6 +2,7 @@ package io.taiga.selenium.pages;
 
 import io.taiga.selenium.factory.DriverFactory;
 import io.taiga.selenium.wait.WaitUtils;
+import io.taiga.utils.ConfigManager;
 import lombok.extern.java.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +19,7 @@ public abstract class PageBase {
         this.driver = DriverFactory.get().getDriver();
     }
 
-    protected static final String BASE_URL = "http://localhost:9000";
+    protected static final String BASE_URL = "https://tree.taiga.io";
 
     protected String getPlaceholderText(By locator) {
         return driver.findElement(locator).getAttribute("placeholder");
@@ -35,9 +36,12 @@ public abstract class PageBase {
     }
 
     public void waitPageToBeLoaded() {
-        By activeLoader = By.cssSelector(".loader.active");
-        WaitUtils.waitUntilVisible(activeLoader);
-        WaitUtils.waitUntilInVisible(activeLoader);
+        if (ConfigManager.getInstance().getSeleniumBrowser().equals("firefox")) {
+            By activeLoader = By.cssSelector(".loader.active");
+            WaitUtils.waitUntilVisible(activeLoader);
+            WaitUtils.waitUntilInVisible(activeLoader);
+        }
+
     }
 
 

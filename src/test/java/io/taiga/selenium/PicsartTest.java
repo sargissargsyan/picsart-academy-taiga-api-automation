@@ -2,13 +2,20 @@ package io.taiga.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.taiga.selenium.base.TestSeleniumBase;
+import io.taiga.selenium.factory.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PicsartTest extends TestSeleniumBase {
+    private WebDriver driver;
+    @BeforeMethod
+    public void beforeMethod() {
+        driver = DriverFactory.get().getDriver();
+    }
 
 
     @Test

@@ -3,6 +3,7 @@ package io.taiga.selenium.pages.components;
 import io.taiga.selenium.factory.DriverFactory;
 import io.taiga.selenium.pages.NewProjectPage;
 import io.taiga.selenium.wait.WaitUtils;
+import io.taiga.utils.ConfigManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -26,9 +27,11 @@ public class TopNavigationComponent {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".navbar")));
     }
     public void waitPageToBeLoaded() {
-        By activeLoader = By.cssSelector(".loader.active");
-        WaitUtils.waitUntilVisible(activeLoader);
-        WaitUtils.waitUntilInVisible(activeLoader);
+        if (ConfigManager.getInstance().getSeleniumBrowser().equals("firefox")) {
+            By activeLoader = By.cssSelector(".loader.active");
+            WaitUtils.waitUntilVisible(activeLoader);
+            WaitUtils.waitUntilInVisible(activeLoader);
+        }
     }
 
     public NewProjectPage clickCreateProject() {

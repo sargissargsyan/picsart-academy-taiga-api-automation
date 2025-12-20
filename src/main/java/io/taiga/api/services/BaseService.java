@@ -13,13 +13,13 @@ import static io.restassured.RestAssured.given;
 
 public class BaseService {
     private static final String BASE_URL = ConfigManager.getInstance().getBaseUrl();
-    private static final int BASE_URL_PORT = ConfigManager.getInstance().getPort();
+//    private static final int BASE_URL_PORT = ConfigManager.getInstance().getPort();
 
     protected static RequestSpecification configBaseRequest() {
         return given()
                 .contentType(ContentType.JSON)
-                .baseUri(BASE_URL)
-                .port(BASE_URL_PORT);
+                .baseUri(BASE_URL);
+//                .port(BASE_URL_PORT);
     }
 
     protected static Map<String, String> setToken(String token) {

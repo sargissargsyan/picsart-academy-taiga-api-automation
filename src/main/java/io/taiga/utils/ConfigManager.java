@@ -69,6 +69,14 @@ public class ConfigManager {
         return getProperty("base.url", "http://localhost");
     }
 
+    public String getRemoteUrl() {
+        return getProperty("selenium.remote.url", "http://localhost");
+    }
+
+    public boolean isRemote() {
+        return Boolean.valueOf(getProperty("selenium.remote", "false"));
+    }
+
     public String getSeleniumBrowser() {
         return getProperty("selenium.browser", "chrome");
     }
