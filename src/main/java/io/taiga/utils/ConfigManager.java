@@ -76,6 +76,9 @@ public class ConfigManager {
     public boolean isRemote() {
         return Boolean.valueOf(getProperty("selenium.remote", "false"));
     }
+    public boolean isRemoteService() {
+        return Boolean.valueOf(getProperty("selenium.remote.service", "false"));
+    }
 
     public String getSeleniumBrowser() {
         return getProperty("selenium.browser", "chrome");

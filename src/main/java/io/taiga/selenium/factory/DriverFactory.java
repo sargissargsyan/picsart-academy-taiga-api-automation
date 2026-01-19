@@ -37,19 +37,24 @@ public class DriverFactory {
         if (driverThead.get() == null) {
             if (ConfigManager.getInstance().getSeleniumBrowser().equals("chrome")){
                 if (ConfigManager.getInstance().isRemote()) {
-                    URL url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
-                    ChromeOptions browserOptions = new ChromeOptions();
-                    browserOptions.setPlatformName("Windows 11");
-                    browserOptions.setBrowserVersion("latest");
-                    Map<String, Object> sauceOptions = new HashMap<>();
-                    sauceOptions.put("username", ""); //set your usernamae
-                    sauceOptions.put("accessKey", ""); // set your access key
-                    sauceOptions.put("build", "selenium-build-N0PCX");
-                    sauceOptions.put("name", "TaigaTests");
-                    sauceOptions.put("screenResolution", "1280x1024");
+                    if (ConfigManager.getInstance().isRemoteService()) {
+                        URL url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+                        ChromeOptions browserOptions = new ChromeOptions();
+                        browserOptions.setPlatformName("Windows 11");
+                        browserOptions.setBrowserVersion("latest");
+                        Map<String, Object> sauceOptions = new HashMap<>();
+                        sauceOptions.put("username", ""); //set your usernamae
+                        sauceOptions.put("accessKey", ""); // set your access key
+                        sauceOptions.put("build", "selenium-build-N0PCX");
+                        sauceOptions.put("name", "TaigaTests");
+                        sauceOptions.put("screenResolution", "1280x1024");
 
-                    browserOptions.setCapability("sauce:options", sauceOptions);
-                    driverThead.set(new RemoteWebDriver(url,browserOptions));
+                        browserOptions.setCapability("sauce:options", sauceOptions);
+                        driverThead.set(new RemoteWebDriver(url,browserOptions));
+                    } else {
+                        driverThead.set(new RemoteWebDriver(new URL(ConfigManager.getInstance().getRemoteUrl()), new ChromeOptions()));
+                    }
+
                 } else {
                     driverThead.set(newChromeDriver());
                 }
