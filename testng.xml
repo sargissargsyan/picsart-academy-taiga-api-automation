@@ -7,7 +7,7 @@
 <!--    <pakages>-->
 <!--        <pacakge>io.taiga*</pacakge>-->
 <!--    </pakages>-->
-    <test name="Taiga Project Area" parallel="methods" thread-count="3" verbose="1">
+    <test name="Taiga Project Area" parallel="methods" thread-count="1" verbose="1">
         <classes>
             <class name="io.taiga.api.ProjectTest"/>
             <class name="io.taiga.api.IssueTest"/>

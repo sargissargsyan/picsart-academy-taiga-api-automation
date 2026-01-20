@@ -1,0 +1,65 @@
+name: Selenium Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Run Tests
+      run: mvn test -DsuiteXmlFile=testng.xml
+
+    - name: Upload Allure results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure-results
+
+  deploy:
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Generate Allure HTML
+        run: |
+          mkdir -p allure-report
+          # install Allure CLI
+          wget https://github.com/allure-framework/allure2/releases/download/2.21.0/allure-2.21.0.zip
+          unzip -o allure-2.21.0.zip -d allure-cli
+          allure-cli/allure-2.21.0/bin/allure generate allure-results -o allure-report
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.TOKEN_PERSONAL }}
+          publish_dir: ./allure-report
+
