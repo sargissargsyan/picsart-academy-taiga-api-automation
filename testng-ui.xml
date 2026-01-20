@@ -10,6 +10,8 @@
     <test name="Taiga Project Selenium" parallel="methods" thread-count="3" verbose="1">
         <classes>
             <class name="io.taiga.selenium.FirstSeleniumTest"/>
+            <class name="io.taiga.selenium.LoginTest"/>
+            <class name="io.taiga.selenium.ProjectTest"/>
         </classes>
     </test>
 </suite>

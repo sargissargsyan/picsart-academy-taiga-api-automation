@@ -21,6 +21,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Start Taiga Application
+      run: docker compose -f taiga/docker-compose.yml up -d
+
     - name: Run Tests
       run: mvn test -DsuiteXmlFile=testng.xml
 
