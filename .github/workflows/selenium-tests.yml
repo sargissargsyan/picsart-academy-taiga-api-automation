@@ -20,7 +20,7 @@ jobs:
         cache: maven
     
     - name: Start Selenium Grid
-      run: ./taiga/launch-taiga.sh
+      run: docker compose up -d --scale chrome=5
     
     - name: Wait for Grid
       run: |
