@@ -1,4 +1,4 @@
-name: API Tests
+name: Selenium Tests
 
 on:
   pull_request:
