@@ -1,5 +1,6 @@
 package io.taiga.listeners;
 
+import io.taiga.utils.DriverUtils;
 import lombok.extern.java.Log;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -26,6 +27,7 @@ public class AutomationRunListener implements ITestListener {
         log.info("------------------------------------------------------------");
         log.info("Test " + result.getMethod().getQualifiedName() + " FAILED");
         log.info("------------------------------------------------------------");
+        DriverUtils.takeScreenShot(result.getMethod().getMethodName());
     }
 
     @Override
