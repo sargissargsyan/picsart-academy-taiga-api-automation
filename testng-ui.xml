@@ -2,7 +2,8 @@
 <suite name="Taiga API Automation">
 
     <listeners>
-        <listener class-name="io.taiga.listeners.RetryListener"></listener>
+        <listener class-name="io.taiga.listeners.RetryListener"/>
+        <listener class-name="io.taiga.listeners.AutomationRunListener"/>
     </listeners>
 <!--    <pakages>-->
 <!--        <pacakge>io.taiga*</pacakge>-->
