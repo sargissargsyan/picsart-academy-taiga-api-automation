@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,6 +48,7 @@ public class FirstSeleniumTest extends TestSeleniumBase {
         driver.findElement(RelativeLocator.with(By.cssSelector("[myprop='myvalue']")));
         driver.findElement(By.tagName("textarea")).sendKeys("Hello Selenium!");
         driver.findElement(By.cssSelector("[name='my-disabled']"));
+        assertTrue(false);
 
 
     }
@@ -122,15 +124,14 @@ public class FirstSeleniumTest extends TestSeleniumBase {
     }
 
     @Test
-    public void fileUpload() throws IOException {
-
-        driver.get( "https://www.selenium.dev/selenium/web/web-form.html");
+    public void fileUpload() {
+        driver.get("https://www.selenium.dev/selenium/web/web-form.html");
         WebElement fileInput = driver.findElement(By.name("my-file"));
 
-        Path path = Files.createTempFile("temp", ".png");
-        String absalutePath = path.toAbsolutePath().toString();
+        // Volume mount: docker-compose mounts .:/app, so file is at /app/...
+        String filePath = "/app/src/main/resources/test.png";
 
-        fileInput.sendKeys(absalutePath);
+        fileInput.sendKeys(filePath);
     }
 
 

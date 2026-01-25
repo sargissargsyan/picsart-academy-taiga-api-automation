@@ -26,3 +26,4 @@ services:
       - SE_VNC_NO_PASSWORD=1
     volumes:
       - /dev/shm:/dev/shm
+      - .:/app
